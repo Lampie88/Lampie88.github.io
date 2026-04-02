@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=1280, initial-scale=1.0, shrink-to-fit=yes">
 <title>lampie.net</title>
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
@@ -279,25 +280,7 @@
 </div>
 
 <script>
-// MOBILE SCALE
-(function(){
-  function setScale(){
-    if(window.innerWidth<=600){
-      const scale=window.innerWidth/1280;
-      document.documentElement.style.setProperty('--mobile-scale',scale);
-      document.body.style.transform=`scale(${scale})`;
-      document.body.style.height=`${window.innerHeight/scale}px`;
-    } else {
-      document.body.style.transform='';
-      document.body.style.width='';
-      document.body.style.height='';
-    }
-  }
-  setScale();
-  window.addEventListener('resize',setScale);
-})();
-
-// MOBILE
+// VISIT COUNTER
 
 function updateClock(){const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h%12||12;document.getElementById('taskbar-clock').textContent=hh+':'+String(m).padStart(2,'0')+' '+ap;}
 updateClock();setInterval(updateClock,10000);
