@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>lampie.com</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'VT323', monospace; user-select: none; background: #008080; }
+
+  /* TASKBAR */
+  #taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 34px; background: #c0c0c0; border-top: 2px solid #fff; display: flex; align-items: center; padding: 0 4px; gap: 4px; z-index: 9999; }
+  #start-btn { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 15px; font-weight: bold; padding: 3px 10px; cursor: pointer; font-family: 'VT323', monospace; }
+  #start-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+  #taskbar-clock { margin-left: auto; background: #c0c0c0; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 2px 10px; font-size: 15px; color: #000; font-family: 'VT323', monospace; }
+  .taskbar-item { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 14px; padding: 2px 10px; cursor: pointer; display: none; font-family: 'VT323', monospace; }
+  .taskbar-item:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+
+  /* DESKTOP ICONS */
+  .desktop-icon { position: absolute; width: 72px; text-align: center; cursor: pointer; padding: 4px; }
+  .desktop-icon:hover .icon-label { background: #000080; color: #fff; }
+  .icon-img { width: 40px; height: 40px; margin: 0 auto 4px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000080; font-weight: bold; font-family: 'VT323', monospace; }
+  .icon-label { font-size: 13px; color: #fff; text-shadow: 1px 1px #000; font-family: 'VT323', monospace; padding: 1px 3px; }
+
+  /* WIN95 WINDOW */
+  .win { position: absolute; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; display: none; flex-direction: column; z-index: 100; }
+  .win.open { display: flex; }
+
+  /* TITLE BAR */
+  .titlebar { background: #000080; padding: 3px 4px; display: flex; align-items: center; gap: 4px; cursor: move; flex-shrink: 0; }
+  .titlebar-icon { font-size: 13px; font-weight: bold; color: #fff; font-family: 'VT323', monospace; flex-shrink: 0; width: 16px; text-align: center; }
+  .titlebar-title { flex: 1; font-size: 14px; color: #fff; font-family: 'VT323', monospace; letter-spacing: 0.5px; }
+  .win-btns { display: flex; gap: 2px; }
+  .win-btn { width: 18px; height: 16px; background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #000; font-family: 'VT323', monospace; font-weight: bold; }
+  .win-btn:active { border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; }
+
+  /* MENU BAR */
+  .menubar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 2px 4px; font-size: 14px; display: flex; gap: 0; flex-shrink: 0; font-family: 'VT323', monospace; }
+  .menubar span { padding: 2px 8px; cursor: default; color: #000; }
+  .menubar span:hover { background: #000080; color: #fff; }
+
+  /* ADDRESS BAR */
+  .addrbar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 3px 6px; display: flex; align-items: center; gap: 4px; flex-shrink: 0; font-family: 'VT323', monospace; font-size: 14px; }
+  .addr-box { flex: 1; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 1px 6px; font-size: 13px; color: #000; font-family: 'VT323', monospace; }
+  .nav-btn { background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; padding: 1px 6px; cursor: pointer; color: #000; font-family: 'VT323', monospace; }
+
+  .win-body { overflow-y: auto; flex: 1; background: #c0c0c0; }
+
+  /* SITE */
+  #site { font-family: 'VT323', monospace; font-size: 20px; color: #000; padding: 12px 16px; background: #c0c0c0; }
+  #site a { color: #00008b; } #site a:visited { color: #551a8b; } #site a:hover { color: #cc0000; }
+  #site h1 { color: #000; font-size: 46px; margin: 0; }
+  #site h2 { color: #000; margin: 0 0 6px 0; }
+  #site hr { border-top: 1px solid #555; border-bottom: 1px solid #fff; margin: 10px 0; }
+  .marquee-wrap { background: #000080; color: #fff; padding: 2px 0; font-size: 15px; display: block; margin-bottom: 8px; overflow: hidden; white-space: nowrap; }
+  .marquee-inner { display: inline-block; animation: marquee 18s linear infinite; }
+  @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+  .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 0; font-size: 24px; max-width: 420px; }
+  .social-grid a { text-decoration: underline; }
+  .greyed { color: #888; text-decoration: underline; cursor: default; pointer-events: none; }
+  .layout { display: flex; gap: 20px; align-items: flex-start; }
+  .left { flex: 1; min-width: 0; } .right { width: 220px; flex-shrink: 0; }
+
+  /* CHAT */
+  .chat-board { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; background: #c0c0c0; padding: 6px; }
+  .chat-title { background: #000080; color: #fff; font-size: 14px; padding: 2px 6px; margin-bottom: 6px; font-family: 'VT323', monospace; }
+  .chat-messages { height: 260px; overflow-y: auto; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 4px 6px; margin-bottom: 6px; font-size: 14px; }
+  .chat-msg { margin-bottom: 5px; border-bottom: 1px solid #ddd; padding-bottom: 3px; line-height: 1.3; }
+  .chat-msg .name { color: #000080; font-weight: bold; } .chat-msg .time { color: #888; font-size: 12px; margin-left: 4px; } .chat-msg .text { display: block; color: #000; }
+  .chat-input { display: flex; flex-direction: column; gap: 4px; }
+  .chat-input input, .chat-input textarea { font-family: 'VT323', monospace; font-size: 14px; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; background: #fff; padding: 2px 4px; width: 100%; color: #000; }
+  .chat-input textarea { resize: none; height: 44px; }
+  .chat-btn { font-family: 'VT323', monospace; font-size: 14px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; padding: 2px 14px; cursor: pointer; align-self: flex-end; color: #000; }
+  .chat-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+  .chat-empty { color: #888; font-style: italic; font-size: 13px; padding: 4px; }
+
+  /* PINBALL */
+  #pinball-canvas { display: block; }
+  #pinball-ui { background: #c0c0c0; padding: 4px 10px; font-size: 14px; display: flex; justify-content: space-between; border-bottom: 1px solid #888; color: #000; font-family: 'VT323', monospace; }
+  #pinball-hint { background: #000080; color: #fff; font-size: 13px; text-align: center; padding: 2px; font-family: 'VT323', monospace; letter-spacing: 1px; }
+</style>
+</head>
+<body>
+
+<!-- DESKTOP ICONS -->
+<div class="desktop-icon" style="top:20px;left:16px;" ondblclick="openWin('site-win')">
+  <div class="icon-img">!</div>
+  <div class="icon-label">lampie.com</div>
+</div>
+<div class="desktop-icon" style="top:110px;left:16px;" ondblclick="openWin('pinball-win'); startPinball()">
+  <div class="icon-img">🎱</div>
+  <div class="icon-label">PINBALL.EXE</div>
+</div>
+
+<!-- SITE WINDOW -->
+<div class="win" id="site-win" style="top:40px;left:80px;width:720px;">
+  <div class="titlebar" onmousedown="startDrag(event,'site-win')">
+    <span class="titlebar-icon">!</span>
+    <div class="titlebar-title">lampie.com - Microsoft Internet Explorer</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('site-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('site-win','tb-site')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Favorites</span><span>Tools</span><span>Help</span></div>
+  <div class="addrbar">
+    <button class="nav-btn">◀</button>
+    <button class="nav-btn">▶</button>
+    <div class="addr-box">http://www.lampie.com/</div>
+    <button class="nav-btn">Go</button>
+  </div>
+  <div class="win-body">
+    <div id="site">
+      <div class="marquee-wrap"><span class="marquee-inner">&nbsp;yuhhhhh lampie.com yuhhh pop out lampie.com yuhhh type shi type shi yuhhhh</span></div>
+      <h1>Lampie !</h1>
+      <hr>
+      <div class="layout">
+        <div class="left">
+          <h2>SOCIALS</h2>
+          <div class="social-grid">
+            <a href="http://instagram.com/jaaicob">instagram</a>
+            <a href="https://soundcloud.com/lamp-ie">soundcloud</a>
+            <a href="https://www.tiktok.com/@asiangarbage">tiktok</a>
+            <a href="https://www.twitch.tv/worldsbestfoodie">twitch</a>
+            <span class="greyed">youtube</span>
+            <span class="greyed">spotify</span>
+          </div>
+          <hr>
+          <h2>SHOWS</h2>
+          <p>APRIL 10 - IKU @ VSHOW KARAOKE HAPPY HOUR<br>
+          <small>31-01 Downing St 2nd Floor, Queens, NY 11354</small><br>
+          <small><small>opening for IKU n shi</small></small></p>
+          <hr>
+          <h2>MIXES</h2>
+          <p>&#9658; <a href="https://soundcloud.com/lamp-ie/goldrush-dj-competition-2025">sometimes i mess around</a><br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
+          <hr>
+          <h2>WATCH</h2>
+          <p>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
+          <hr>
+          <p><small>lampie 2026 &lt;3</small></p>
+        </div>
+        <div class="right">
+          <div class="chat-board">
+            <div class="chat-title">:: CHAT BOARD ::</div>
+            <div class="chat-messages" id="chatMessages"><div class="chat-empty">no messages yet. say something.</div></div>
+            <div class="chat-input">
+              <input type="text" id="chatName" placeholder="your name" maxlength="24"/>
+              <textarea id="chatText" placeholder="say something..." maxlength="200"></textarea>
+              <button class="chat-btn" onclick="postMessage()">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PINBALL WINDOW -->
+<div class="win" id="pinball-win" style="top:50px;left:240px;width:324px;">
+  <div class="titlebar" onmousedown="startDrag(event,'pinball-win')">
+    <span class="titlebar-icon">🎱</span>
+    <div class="titlebar-title">3D Pinball - Space Lampie</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('pinball-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('pinball-win','tb-pinball'); stopPinball()">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>Game</span><span>Options</span><span>Help</span></div>
+  <div id="pinball-ui">
+    <span>SCORE: <b id="p-score">0</b></span>
+    <span>BALL: <b id="p-ball">3</b></span>
+    <span>BEST: <b id="p-high">0</b></span>
+  </div>
+  <div id="pinball-hint">[ Z ] LEFT &nbsp; RIGHT [ / ] &nbsp; [ SPACE ] LAUNCH</div>
+  <canvas id="pinball-canvas" width="320" height="480"></canvas>
+</div>
+
+<!-- TASKBAR -->
+<div id="taskbar">
+  <button id="start-btn">⊞ Start</button>
+  <div id="tb-site" class="taskbar-item" onclick="toggleWin('site-win')">! lampie.com</div>
+  <div id="tb-pinball" class="taskbar-item" onclick="toggleWin('pinball-win')">🎱 PINBALL.EXE</div>
+  <div id="taskbar-clock"></div>
+</div>
+
+<script>
+function updateClock(){const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h%12||12;document.getElementById('taskbar-clock').textContent=hh+':'+String(m).padStart(2,'0')+' '+ap;}
+updateClock();setInterval(updateClock,10000);
+
+function openWin(id){const w=document.getElementById(id);w.classList.add('open');w.style.display='flex';document.getElementById(id==='site-win'?'tb-site':'tb-pinball').style.display='block';}
+function closeWin(id,tb){document.getElementById(id).classList.remove('open');document.getElementById(id).style.display='none';document.getElementById(tb).style.display='none';}
+function minimizeWin(id){document.getElementById(id).style.display='none';}
+function toggleWin(id){const w=document.getElementById(id);w.style.display=(w.style.display==='none')?'flex':'none';}
+
+let drag=null;
+function startDrag(e,id){const w=document.getElementById(id),r=w.getBoundingClientRect();drag={id,ox:e.clientX-r.left,oy:e.clientY-r.top};w.style.zIndex=200;}
+document.addEventListener('mousemove',e=>{if(!drag)return;const w=document.getElementById(drag.id);w.style.left=(e.clientX-drag.ox)+'px';w.style.top=(e.clientY-drag.oy)+'px';});
+document.addEventListener('mouseup',()=>drag=null);
+
+const STORAGE_KEY='lampie-chatboard-messages';
+async function loadMessages(){try{const r=await window.storage.get(STORAGE_KEY,true);renderMessages(JSON.parse(r.value));}catch(e){renderMessages([]);}}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function renderMessages(msgs){const box=document.getElementById('chatMessages');if(!msgs||!msgs.length){box.innerHTML='<div class="chat-empty">no messages yet. say something.</div>';return;}box.innerHTML=msgs.map(m=>`<div class="chat-msg"><span class="name">${esc(m.name)}</span><span class="time">${m.time}</span><span class="text">${esc(m.text)}</span></div>`).join('');box.scrollTop=box.scrollHeight;}
+async function postMessage(){const name=document.getElementById('chatName').value.trim()||'anon',text=document.getElementById('chatText').value.trim();if(!text)return;const now=new Date(),time=now.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();let msgs=[];try{const r=await window.storage.get(STORAGE_KEY,true);msgs=JSON.parse(r.value);}catch(e){msgs=[];}msgs.push({name,text,time});if(msgs.length>50)msgs=msgs.slice(-50);await window.storage.set(STORAGE_KEY,JSON.stringify(msgs),true);document.getElementById('chatText').value='';renderMessages(msgs);}
+document.getElementById('chatText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();postMessage();}});
+loadMessages();setInterval(loadMessages,10000);
+
+// PINBALL
+const C=document.getElementById('pinball-canvas'),ctx=C.getContext('2d');
+const W=320,H=480;
+const BUMPERS=[{x:100,y:130,r:16,hit:0},{x:210,y:110,r:16,hit:0},{x:158,y:185,r:16,hit:0}];
+const GUTTERS=[{x1:22,y1:360,x2:88,y2:428},{x1:298,y1:360,x2:232,y2:428}];
+const LF={px:88,py:432,dir:1},RF={px:232,py:432,dir:-1},FL_LEN=56;
+let ball,score,balls,high=0,running=false,launching,raf,lDown=false,rDown=false;
+function flipAngle(p,d){return p.dir===1?(d?-0.45:0.45):(d?Math.PI+0.45:Math.PI-0.45);}
+function flipperEnd(p,d){const a=flipAngle(p,d);return{x:p.px+Math.cos(a)*FL_LEN,y:p.py+Math.sin(a)*FL_LEN};}
+function resetBall(){ball={x:300,y:320,vx:0,vy:0,r:7};launching=true;}
+function startPinball(){if(running)return;score=0;balls=3;launching=true;document.getElementById('p-score').textContent=0;document.getElementById('p-ball').textContent=3;resetBall();running=true;raf=requestAnimationFrame(pLoop);window.addEventListener('keydown',pKey);window.addEventListener('keyup',pKeyUp);}
+function stopPinball(){running=false;cancelAnimationFrame(raf);window.removeEventListener('keydown',pKey);window.removeEventListener('keyup',pKeyUp);}
+function pKey(e){if(e.code==='KeyZ'){lDown=true;e.preventDefault();}if(e.code==='Slash'){rDown=true;e.preventDefault();}if(e.code==='Space'&&launching){ball.vy=-13;ball.vx=-1.8;launching=false;e.preventDefault();}}
+function pKeyUp(e){if(e.code==='KeyZ')lDown=false;if(e.code==='Slash')rDown=false;}
+function pLoop(){if(!running)return;pUpdate();pDraw();raf=requestAnimationFrame(pLoop);}
+function pUpdate(){
+  if(launching)return;
+  ball.vy+=0.28;ball.x+=ball.vx;ball.y+=ball.vy;
+  if(ball.x-ball.r<22){ball.x=22+ball.r;ball.vx=Math.abs(ball.vx)*0.9;}
+  if(ball.x+ball.r>298){ball.x=298-ball.r;ball.vx=-Math.abs(ball.vx)*0.9;}
+  if(ball.y-ball.r<8){ball.y=8+ball.r;ball.vy=Math.abs(ball.vy)*0.9;}
+  for(const b of BUMPERS){const dx=ball.x-b.x,dy=ball.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d<ball.r+b.r+1){const nx=dx/d,ny=dy/d;ball.x=b.x+nx*(ball.r+b.r+2);ball.y=b.y+ny*(ball.r+b.r+2);const dot=ball.vx*nx+ball.vy*ny;ball.vx=(ball.vx-2*dot*nx)*1.15;ball.vy=(ball.vy-2*dot*ny)*1.15;const spd=Math.sqrt(ball.vx*ball.vx+ball.vy*ball.vy);if(spd>14){ball.vx=ball.vx/spd*14;ball.vy=ball.vy/spd*14;}b.hit=8;addScore(100);}if(b.hit>0)b.hit--;}
+  for(const g of GUTTERS)reflectSeg(ball,g.x1,g.y1,g.x2,g.y2);
+  reflectFlipper(ball,LF,lDown);reflectFlipper(ball,RF,rDown);
+  if(ball.y>H+30){balls--;document.getElementById('p-ball').textContent=balls;if(balls<=0){gameOver();return;}resetBall();}
+}
+function reflectFlipper(b,p,down){const e=flipperEnd(p,down),cp=closestSeg(b.x,b.y,p.px,p.py,e.x,e.y),dx=b.x-cp.x,dy=b.y-cp.y,d=Math.sqrt(dx*dx+dy*dy);if(d<b.r+7){const nx=dx/(d||1),ny=dy/(d||1);b.x=cp.x+nx*(b.r+8);b.y=cp.y+ny*(b.r+8);const dot=b.vx*nx+b.vy*ny;b.vx-=2*dot*nx;b.vy-=2*dot*ny;if(down)b.vy-=5;if(b.vy>-1)b.vy=-1;}}
+function reflectSeg(b,x1,y1,x2,y2){const cp=closestSeg(b.x,b.y,x1,y1,x2,y2),dx=b.x-cp.x,dy=b.y-cp.y,d=Math.sqrt(dx*dx+dy*dy);if(d<b.r+3){const nx=dx/(d||1),ny=dy/(d||1);b.x=cp.x+nx*(b.r+4);b.y=cp.y+ny*(b.r+4);const dot=b.vx*nx+b.vy*ny;b.vx-=2*dot*nx*0.85;b.vy-=2*dot*ny*0.85;}}
+function closestSeg(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,len2=dx*dx+dy*dy;if(len2===0)return{x:ax,y:ay};const t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/len2));return{x:ax+t*dx,y:ay+t*dy};}
+function addScore(n){score+=n;document.getElementById('p-score').textContent=score;if(score>high){high=score;document.getElementById('p-high').textContent=high;}}
+function gameOver(){running=false;cancelAnimationFrame(raf);pDraw();ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#ffdd44';ctx.font='bold 34px VT323,monospace';ctx.textAlign='center';ctx.fillText('GAME OVER',W/2,H/2-20);ctx.fillStyle='#fff';ctx.font='20px VT323,monospace';ctx.fillText('SCORE: '+score,W/2,H/2+8);ctx.fillText('DBL-CLICK TO REPLAY',W/2,H/2+32);ctx.textAlign='left';window.removeEventListener('keydown',pKey);window.removeEventListener('keyup',pKeyUp);}
+function pDraw(){
+  const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#0a0030');grad.addColorStop(1,'#150050');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='#6699ff';ctx.lineWidth=4;ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(22,H);ctx.stroke();ctx.beginPath();ctx.moveTo(298,0);ctx.lineTo(298,H);ctx.stroke();
+  ctx.lineCap='round';for(const g of GUTTERS){ctx.beginPath();ctx.moveTo(g.x1,g.y1);ctx.lineTo(g.x2,g.y2);ctx.stroke();}
+  for(const b of BUMPERS){const hit=b.hit>0;const grd=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*2);grd.addColorStop(0,hit?'rgba(255,200,0,0.4)':'rgba(255,80,0,0.3)');grd.addColorStop(1,'transparent');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(b.x,b.y,b.r*2,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=hit?'#ffcc00':'#ff4400';ctx.fill();ctx.strokeStyle=hit?'#fff':'#ff8800';ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.arc(b.x,b.y,b.r-5,0,Math.PI*2);ctx.fillStyle=hit?'#fff8cc':'#1a0000';ctx.fill();ctx.fillStyle=hit?'#ff8800':'#ff6600';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('★',b.x,b.y+4);ctx.textAlign='left';ctx.fillStyle='rgba(255,150,50,0.7)';ctx.font='10px VT323,monospace';ctx.textAlign='center';ctx.fillText('100',b.x,b.y+b.r+11);ctx.textAlign='left';}
+  ctx.strokeStyle='#333366';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(285,180);ctx.lineTo(285,440);ctx.stroke();
+  drawFlipper(LF,lDown);drawFlipper(RF,rDown);
+  if(ball){const bg=ctx.createRadialGradient(ball.x-2,ball.y-2,1,ball.x,ball.y,ball.r);bg.addColorStop(0,'#ffffff');bg.addColorStop(0.4,'#dddddd');bg.addColorStop(1,'#888888');ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;ctx.stroke();}
+  if(launching){ctx.fillStyle='rgba(0,0,20,0.65)';ctx.fillRect(30,210,260,34);ctx.fillStyle='#ffff88';ctx.font='17px VT323,monospace';ctx.textAlign='center';ctx.fillText('>> PRESS SPACE TO LAUNCH <<',W/2,231);ctx.textAlign='left';}
+}
+function drawFlipper(p,down){const e=flipperEnd(p,down),grad=ctx.createLinearGradient(p.px,p.py,e.x,e.y);grad.addColorStop(0,'#aaddff');grad.addColorStop(1,'#4488cc');ctx.strokeStyle=grad;ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(e.x,e.y);ctx.stroke();ctx.fillStyle='#88bbff';ctx.beginPath();ctx.arc(p.px,p.py,5,0,Math.PI*2);ctx.fill();}
+</script>
+</body>
+</html>
