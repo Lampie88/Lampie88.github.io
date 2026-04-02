@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=900">
+<meta name="viewport" content="width=900, user-scalable=yes">
 <title>lampie.net</title>
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
@@ -17,8 +17,7 @@
    ──────────────────────────────────────────────────────────── */
 
 body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
-  user-select:none;background:#008080;
-  background-image:url('wallpaper.jpg');background-size:cover;background-position:center;}
+  user-select:none;background:#008080;}
 
 /* ── BEVEL HELPERS ───────────────────────────────────────────── */
 .raised{border:2px solid;border-color:#fff #555 #555 #fff;}
@@ -187,7 +186,41 @@ body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
 #ver{position:fixed;bottom:38px;right:6px;font-family:'VT323',monospace;
   font-size:11px;color:rgba(0,0,0,0.4);z-index:9997;pointer-events:none;}
 
-/* ── DESKTOP ─────────────────────────────────────────────────── */
+/* ── DESKTOP (default) ───────────────────────────────────────── */
+.di-box{width:96px;height:96px;}
+.di{width:120px;}
+.di-label{font-size:13px;}
+
+/* Reminder desktop 3x */
+#show-bubble{font-size:28px;max-width:420px;padding:14px 18px 20px;line-height:1.6;border-width:3px;border-radius:10px;}
+#show-bubble b{font-size:32px;}
+#show-bubble-close{font-size:22px;}
+#show-bubble::after{border-left-width:14px;border-right-width:14px;border-top-width:16px;bottom:-16px;}
+
+/* ── MOBILE CLASS (applied via JS on touch devices) ──────────── */
+body.is-mobile #taskbar{height:56px;}
+body.is-mobile #start-btn{font-size:22px;padding:6px 14px;}
+body.is-mobile .tb-item{font-size:17px;padding:4px 10px;}
+body.is-mobile #taskbar-clock{font-size:19px;padding:4px 12px;}
+
+/* Icons 2x on mobile */
+body.is-mobile .di-box{width:144px;height:144px;font-size:64px;}
+body.is-mobile .di{width:160px;}
+body.is-mobile .di-label{font-size:18px;}
+
+/* Reminder 300% on mobile */
+body.is-mobile #show-bubble{font-size:28px;max-width:380px;padding:12px 16px 20px;line-height:1.6;border-width:3px;bottom:70px;right:10px;}
+body.is-mobile #show-bubble b{font-size:30px;}
+body.is-mobile #show-bubble-close{font-size:20px;}
+body.is-mobile #show-bubble::after{border-left-width:12px;border-right-width:12px;border-top-width:14px;bottom:-14px;}
+
+/* Windows bigger on mobile */
+body.is-mobile .win{font-size:120%;}
+body.is-mobile .titlebar-title{font-size:20px;}
+body.is-mobile .win-btn{width:28px;height:24px;font-size:16px;}
+body.is-mobile .menubar{font-size:18px;}
+body.is-mobile .addrbar{font-size:18px;}
+
 
 /* ── MOBILE ──────────────────────────────────────────────────── */
 @media(max-width:600px){
@@ -213,7 +246,7 @@ body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
 </div>
 
 <!-- VERSION -->
-<div id="ver">v0.1.0a</div>
+<div id="ver">v0.1.1</div>
 
 <!-- ── COLUMN 1: MAIN ICONS ──────────────────────────────────── -->
 <div class="di" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
@@ -510,6 +543,15 @@ body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
 </div>
 
 <script>
+// ── MOBILE DETECTION ───────────────────────────────────────────
+// viewport is fixed at 900px wide so media queries don't work on mobile
+// instead detect touch device and apply class to body
+(function(){
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && window.screen.width <= 1024);
+  if(isMobile) document.body.classList.add('is-mobile');
+})();
+
 // ── CLOCK ──────────────────────────────────────────────────────
 function tick(){
   const n=new Date(),h=n.getHours(),m=n.getMinutes();
