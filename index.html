@@ -2,15 +2,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>lampie.com</title>
+<title>lampie.net</title>
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'VT323', monospace; user-select: none; background: #008080; }
+  body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'VT323', monospace; user-select: none; background: #008080; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; }
 
   /* TASKBAR */
   #taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 34px; background: #c0c0c0; border-top: 2px solid #fff; display: flex; align-items: center; padding: 0 4px; gap: 4px; z-index: 9999; }
-  #start-btn { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 15px; font-weight: bold; padding: 3px 10px; cursor: pointer; font-family: 'VT323', monospace; }
+  #start-btn { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 15px; font-weight: bold; padding: 3px 10px; cursor: pointer; font-family: 'VT323', monospace; }  
   #start-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
   #taskbar-clock { margin-left: auto; background: #c0c0c0; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 2px 10px; font-size: 15px; color: #000; font-family: 'VT323', monospace; }
   .taskbar-item { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 14px; padding: 2px 10px; cursor: pointer; display: none; font-family: 'VT323', monospace; }
@@ -19,8 +19,9 @@
   /* DESKTOP ICONS */
   .desktop-icon { position: absolute; width: 72px; text-align: center; cursor: pointer; padding: 4px; }
   .desktop-icon:hover .icon-label { background: #000080; color: #fff; }
-  .icon-img { width: 40px; height: 40px; margin: 0 auto 4px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000080; font-weight: bold; font-family: 'VT323', monospace; }
-  .icon-label { font-size: 13px; color: #fff; text-shadow: 1px 1px #000; font-family: 'VT323', monospace; padding: 1px 3px; }
+  .icon-img { width: 56px; height: 56px; margin: 0 auto 4px; display: flex; align-items: center; justify-content: center; font-size: 36px; background: transparent; color: #fff; font-weight: bold; font-family: 'VT323', monospace; text-shadow: 1px 1px #000; }
+  .icon-label { font-size: 14px; color: #fff; text-shadow: 1px 1px #000; font-family: 'VT323', monospace; padding: 1px 3px; }
+  .desktop-icon { position: absolute; width: 80px; text-align: center; cursor: pointer; padding: 4px; }
 
   /* WIN95 WINDOW */
   .win { position: absolute; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; display: none; flex-direction: column; z-index: 100; }
@@ -85,18 +86,26 @@
 <!-- DESKTOP ICONS -->
 <div class="desktop-icon" style="top:20px;left:16px;" ondblclick="openWin('site-win')">
   <div class="icon-img">!</div>
-  <div class="icon-label">lampie.com</div>
+  <div class="icon-label">lampie.net</div>
 </div>
-<div class="desktop-icon" style="top:110px;left:16px;" ondblclick="openWin('pinball-win'); startPinball()">
-  <div class="icon-img">🎱</div>
-  <div class="icon-label">PINBALL.EXE</div>
+<div class="desktop-icon" style="top:110px;left:16px;" ondblclick="openWin('blackjack-win')">
+  <div class="icon-img">♠</div>
+  <div class="icon-label">Blackjack.exe</div>
 </div>
 
+<div class="desktop-icon" style="top:200px;left:16px;" ondblclick="openWin('songs-win')">
+  <div class="icon-img">♪</div>
+  <div class="icon-label">Songs I Like</div>
+</div>
+<div class="desktop-icon" style="top:290px;left:16px;" ondblclick="openWin('readme-win')">
+  <div class="icon-img">📄</div>
+  <div class="icon-label">readme.txt</div>
+</div>
 <!-- SITE WINDOW -->
 <div class="win" id="site-win" style="top:40px;left:80px;width:720px;">
   <div class="titlebar" onmousedown="startDrag(event,'site-win')">
     <span class="titlebar-icon">!</span>
-    <div class="titlebar-title">lampie.com - Microsoft Internet Explorer</div>
+    <div class="titlebar-title">lampie.net - Microsoft Internet Explorer</div>
     <div class="win-btns">
       <div class="win-btn" onclick="minimizeWin('site-win')">_</div>
       <div class="win-btn">□</div>
@@ -107,12 +116,12 @@
   <div class="addrbar">
     <button class="nav-btn">◀</button>
     <button class="nav-btn">▶</button>
-    <div class="addr-box">http://www.lampie.com/</div>
+    <div class="addr-box">http://www.lampie.net/</div>
     <button class="nav-btn">Go</button>
   </div>
   <div class="win-body">
     <div id="site">
-      <div class="marquee-wrap"><span class="marquee-inner">&nbsp;yuhhhhh lampie.com yuhhh pop out lampie.com yuhhh type shi type shi yuhhhh</span></div>
+      <div class="marquee-wrap"><span class="marquee-inner">&nbsp;yuhhhhh lampie.net yuhhh pop out lampie.net yuhhh type shi type shi yuhhhh</span></div>
       <h1>Lampie !</h1>
       <hr>
       <div class="layout">
@@ -139,6 +148,7 @@
           <p>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
           <hr>
           <p><small>lampie 2026 &lt;3</small></p>
+          <p><small>visitors: <span id="visit-count" style="font-family:'VT323',monospace; background:#000; color:#0f0; padding:1px 6px; letter-spacing:2px;">000000</span></small></p>
         </div>
         <div class="right">
           <div class="chat-board">
@@ -156,40 +166,143 @@
   </div>
 </div>
 
-<!-- PINBALL WINDOW -->
-<div class="win" id="pinball-win" style="top:50px;left:240px;width:324px;">
-  <div class="titlebar" onmousedown="startDrag(event,'pinball-win')">
-    <span class="titlebar-icon">🎱</span>
-    <div class="titlebar-title">3D Pinball - Space Lampie</div>
+<!-- README WINDOW -->
+<div class="win" id="readme-win" style="top:80px;left:180px;width:340px;">
+  <div class="titlebar" onmousedown="startDrag(event,'readme-win')">
+    <span class="titlebar-icon">📄</span>
+    <div class="titlebar-title">readme.txt - Notepad</div>
     <div class="win-btns">
-      <div class="win-btn" onclick="minimizeWin('pinball-win')">_</div>
+      <div class="win-btn" onclick="minimizeWin('readme-win')">_</div>
       <div class="win-btn">□</div>
-      <div class="win-btn" onclick="closeWin('pinball-win','tb-pinball'); stopPinball()">✕</div>
+      <div class="win-btn" onclick="closeWin('readme-win','tb-readme')">✕</div>
     </div>
   </div>
-  <div class="menubar"><span>Game</span><span>Options</span><span>Help</span></div>
-  <div id="pinball-ui">
-    <span>SCORE: <b id="p-score">0</b></span>
-    <span>BALL: <b id="p-ball">3</b></span>
-    <span>BEST: <b id="p-high">0</b></span>
+  <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
+  <div style="background:#fff; padding:10px 12px; font-family:'VT323',monospace; font-size:18px; color:#000; min-height:100px; border-top:1px solid #555;">
+    this is an early version, itll get cooler i promise!
   </div>
-  <div id="pinball-hint">[ Z ] LEFT &nbsp; RIGHT [ / ] &nbsp; [ SPACE ] LAUNCH</div>
-  <canvas id="pinball-canvas" width="320" height="480"></canvas>
+</div>
+
+<!-- SONGS I LIKE WINDOW -->
+<div class="win" id="songs-win" style="top:60px;left:320px;width:300px;">
+  <div class="titlebar" onmousedown="startDrag(event,'songs-win')">
+    <span class="titlebar-icon">♪</span>
+    <div class="titlebar-title">Songs I Like</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
+    </div>
+  </div>
+  <!-- Winamp-style title bar -->
+  <div style="background:#c0c0c0; border-bottom:1px solid #888; padding:3px 8px; display:flex; justify-content:space-between; font-family:'VT323',monospace; font-size:15px; color:#000;">
+    <span>Lampie Music Player</span>
+    <span>&#9835;</span>
+  </div>
+  <div style="background:#000; height:28px; padding:0; overflow:hidden;">
+    <canvas id="winamp-vis" width="300" height="28" style="display:block;"></canvas>
+  </div>
+  <!-- SoundCloud embed -->
+  <iframe id="sc-player" width="300" height="300" scrolling="no" frameborder="no" allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lamp-ie/sets/songs-i-like&color=%2300ff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
+  </iframe>
+  <!-- Winamp bottom bar removed -->
+</div>
+
+<!-- BLACKJACK WINDOW -->
+<div class="win" id="blackjack-win" style="top:50px;left:240px;width:360px;">
+  <div class="titlebar" onmousedown="startDrag(event,'blackjack-win')">
+    <span class="titlebar-icon">♠</span>
+    <div class="titlebar-title">Blackjack.exe</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('blackjack-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('blackjack-win','tb-blackjack')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>Game</span><span>Help</span></div>
+  <div id="bj-wrap" style="background:#006400; padding:10px; font-family:'VT323',monospace; color:#fff; font-size:16px;">
+
+    <!-- Balance + bet -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:rgba(0,0,0,0.3); padding:4px 8px;">
+      <span>BALANCE: <b id="bj-balance">$100</b></span>
+      <span>BET: <b id="bj-bet">$5</b></span>
+    </div>
+
+    <!-- Dealer -->
+    <div style="margin-bottom:6px;">
+      <div style="font-size:13px; color:#cfc;">DEALER <span id="bj-dealer-val"></span></div>
+      <div id="bj-dealer-cards" style="display:flex; gap:4px; flex-wrap:wrap; min-height:70px; margin-top:4px;"></div>
+    </div>
+
+    <!-- Player -->
+    <div style="margin-bottom:8px;">
+      <div style="font-size:13px; color:#cfc;">YOU <span id="bj-player-val"></span></div>
+      <div id="bj-player-cards" style="display:flex; gap:4px; flex-wrap:wrap; min-height:70px; margin-top:4px;"></div>
+    </div>
+
+    <!-- Message -->
+    <div id="bj-msg" style="text-align:center; font-size:20px; min-height:24px; color:#ffff88; margin-bottom:8px;"></div>
+
+    <!-- Bet controls -->
+    <div id="bj-bet-controls" style="display:flex; gap:4px; justify-content:center; margin-bottom:6px;">
+      <button class="bj-btn" onclick="bjChangeBet(-5)">-$5</button>
+      <button class="bj-btn" onclick="bjChangeBet(5)">+$5</button>
+      <button class="bj-btn" onclick="bjChangeBet(10)">+$10</button>
+      <button class="bj-btn" onclick="bjChangeBet(25)">+$25</button>
+      <button class="bj-btn" onclick="bjDeal()">DEAL</button>
+    </div>
+
+    <!-- Action controls -->
+    <div id="bj-action-controls" style="display:none; gap:4px; justify-content:center; margin-bottom:6px;">
+      <button class="bj-btn" onclick="bjHit()">HIT</button>
+      <button class="bj-btn" onclick="bjStand()">STAND</button>
+      <button class="bj-btn" onclick="bjDouble()" id="bj-double-btn">DOUBLE</button>
+    </div>
+
+    <!-- New game button -->
+    <div id="bj-newgame-controls" style="display:none; justify-content:center; margin-bottom:6px;">
+      <button class="bj-btn" onclick="bjNewRound()">NEW ROUND</button>
+    </div>
+
+  </div>
 </div>
 
 <!-- TASKBAR -->
 <div id="taskbar">
-  <button id="start-btn">⊞ Start</button>
-  <div id="tb-site" class="taskbar-item" onclick="toggleWin('site-win')">! lampie.com</div>
-  <div id="tb-pinball" class="taskbar-item" onclick="toggleWin('pinball-win')">🎱 PINBALL.EXE</div>
+  <button id="start-btn">! Start</button>
+  <div id="tb-site" class="taskbar-item" onclick="toggleWin('site-win')">! lampie.net</div>
+  <div id="tb-readme" class="taskbar-item" onclick="toggleWin('readme-win')">📄 readme.txt</div>
+  <div id="tb-songs" class="taskbar-item" onclick="toggleWin('songs-win')">♪ Songs I Like</div>
+  <div id="tb-blackjack" class="taskbar-item" onclick="toggleWin('blackjack-win')">♠ Blackjack.exe</div>
   <div id="taskbar-clock"></div>
 </div>
 
 <script>
+// MOBILE SCALE
+(function(){
+  function setScale(){
+    if(window.innerWidth<=600){
+      const scale=window.innerWidth/1280;
+      document.documentElement.style.setProperty('--mobile-scale',scale);
+      document.body.style.transform=`scale(${scale})`;
+      document.body.style.height=`${window.innerHeight/scale}px`;
+    } else {
+      document.body.style.transform='';
+      document.body.style.width='';
+      document.body.style.height='';
+    }
+  }
+  setScale();
+  window.addEventListener('resize',setScale);
+})();
+
+// MOBILE
+
 function updateClock(){const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h%12||12;document.getElementById('taskbar-clock').textContent=hh+':'+String(m).padStart(2,'0')+' '+ap;}
 updateClock();setInterval(updateClock,10000);
 
-function openWin(id){const w=document.getElementById(id);w.classList.add('open');w.style.display='flex';document.getElementById(id==='site-win'?'tb-site':'tb-pinball').style.display='block';}
+function openWin(id){const w=document.getElementById(id);w.classList.add('open');w.style.display='flex';const tb={['site-win']:'tb-site',['blackjack-win']:'tb-blackjack',['songs-win']:'tb-songs',['readme-win']:'tb-readme'}[id];if(tb)document.getElementById(tb).style.display='block';}
 function closeWin(id,tb){document.getElementById(id).classList.remove('open');document.getElementById(id).style.display='none';document.getElementById(tb).style.display='none';}
 function minimizeWin(id){document.getElementById(id).style.display='none';}
 function toggleWin(id){const w=document.getElementById(id);w.style.display=(w.style.display==='none')?'flex':'none';}
@@ -199,56 +312,187 @@ function startDrag(e,id){const w=document.getElementById(id),r=w.getBoundingClie
 document.addEventListener('mousemove',e=>{if(!drag)return;const w=document.getElementById(drag.id);w.style.left=(e.clientX-drag.ox)+'px';w.style.top=(e.clientY-drag.oy)+'px';});
 document.addEventListener('mouseup',()=>drag=null);
 
-const STORAGE_KEY='lampie-chatboard-messages';
-async function loadMessages(){try{const r=await window.storage.get(STORAGE_KEY,true);renderMessages(JSON.parse(r.value));}catch(e){renderMessages([]);}}
+const STORAGE_KEY='lampie-chat-v2';
+async function loadMessages(){
+  try {
+    const r=await window.storage.get(STORAGE_KEY,true);
+    if(r&&r.value) renderMessages(JSON.parse(r.value));
+    else renderMessages([]);
+  } catch(e){ renderMessages([]); }
+}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function renderMessages(msgs){const box=document.getElementById('chatMessages');if(!msgs||!msgs.length){box.innerHTML='<div class="chat-empty">no messages yet. say something.</div>';return;}box.innerHTML=msgs.map(m=>`<div class="chat-msg"><span class="name">${esc(m.name)}</span><span class="time">${m.time}</span><span class="text">${esc(m.text)}</span></div>`).join('');box.scrollTop=box.scrollHeight;}
-async function postMessage(){const name=document.getElementById('chatName').value.trim()||'anon',text=document.getElementById('chatText').value.trim();if(!text)return;const now=new Date(),time=now.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();let msgs=[];try{const r=await window.storage.get(STORAGE_KEY,true);msgs=JSON.parse(r.value);}catch(e){msgs=[];}msgs.push({name,text,time});if(msgs.length>50)msgs=msgs.slice(-50);await window.storage.set(STORAGE_KEY,JSON.stringify(msgs),true);document.getElementById('chatText').value='';renderMessages(msgs);}
+function renderMessages(msgs){
+  const box=document.getElementById('chatMessages');
+  if(!msgs||!msgs.length){box.innerHTML='<div class="chat-empty">no messages yet. say something.</div>';return;}
+  box.innerHTML=msgs.map(m=>`<div class="chat-msg"><span class="name">${esc(m.name)}</span><span class="time">${m.time}</span><span class="text">${esc(m.text)}</span></div>`).join('');
+  box.scrollTop=box.scrollHeight;
+}
+async function postMessage(){
+  const name=document.getElementById('chatName').value.trim()||'anon';
+  const text=document.getElementById('chatText').value.trim();
+  if(!text)return;
+  const now=new Date();
+  const time=now.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();
+  let msgs=[];
+  try {
+    const r=await window.storage.get(STORAGE_KEY,true);
+    if(r&&r.value) msgs=JSON.parse(r.value);
+  } catch(e){ msgs=[]; }
+  msgs.push({name,text,time});
+  if(msgs.length>50)msgs=msgs.slice(-50);
+  try {
+    await window.storage.set(STORAGE_KEY,JSON.stringify(msgs),true);
+  } catch(e){ console.error('storage error',e); }
+  document.getElementById('chatText').value='';
+  renderMessages(msgs);
+}
 document.getElementById('chatText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();postMessage();}});
-loadMessages();setInterval(loadMessages,10000);
+loadMessages();
+setInterval(loadMessages,8000);
 
-// PINBALL
-const C=document.getElementById('pinball-canvas'),ctx=C.getContext('2d');
-const W=320,H=480;
-const BUMPERS=[{x:100,y:130,r:16,hit:0},{x:210,y:110,r:16,hit:0},{x:158,y:185,r:16,hit:0}];
-const GUTTERS=[{x1:22,y1:360,x2:88,y2:428},{x1:298,y1:360,x2:232,y2:428}];
-const LF={px:88,py:432,dir:1},RF={px:232,py:432,dir:-1},FL_LEN=56;
-let ball,score,balls,high=0,running=false,launching,raf,lDown=false,rDown=false;
-function flipAngle(p,d){return p.dir===1?(d?-0.45:0.45):(d?Math.PI+0.45:Math.PI-0.45);}
-function flipperEnd(p,d){const a=flipAngle(p,d);return{x:p.px+Math.cos(a)*FL_LEN,y:p.py+Math.sin(a)*FL_LEN};}
-function resetBall(){ball={x:300,y:320,vx:0,vy:0,r:7};launching=true;}
-function startPinball(){if(running)return;score=0;balls=3;launching=true;document.getElementById('p-score').textContent=0;document.getElementById('p-ball').textContent=3;resetBall();running=true;raf=requestAnimationFrame(pLoop);window.addEventListener('keydown',pKey);window.addEventListener('keyup',pKeyUp);}
-function stopPinball(){running=false;cancelAnimationFrame(raf);window.removeEventListener('keydown',pKey);window.removeEventListener('keyup',pKeyUp);}
-function pKey(e){if(e.code==='KeyZ'){lDown=true;e.preventDefault();}if(e.code==='Slash'){rDown=true;e.preventDefault();}if(e.code==='Space'&&launching){ball.vy=-13;ball.vx=-1.8;launching=false;e.preventDefault();}}
-function pKeyUp(e){if(e.code==='KeyZ')lDown=false;if(e.code==='Slash')rDown=false;}
-function pLoop(){if(!running)return;pUpdate();pDraw();raf=requestAnimationFrame(pLoop);}
-function pUpdate(){
-  if(launching)return;
-  ball.vy+=0.28;ball.x+=ball.vx;ball.y+=ball.vy;
-  if(ball.x-ball.r<22){ball.x=22+ball.r;ball.vx=Math.abs(ball.vx)*0.9;}
-  if(ball.x+ball.r>298){ball.x=298-ball.r;ball.vx=-Math.abs(ball.vx)*0.9;}
-  if(ball.y-ball.r<8){ball.y=8+ball.r;ball.vy=Math.abs(ball.vy)*0.9;}
-  for(const b of BUMPERS){const dx=ball.x-b.x,dy=ball.y-b.y,d=Math.sqrt(dx*dx+dy*dy);if(d<ball.r+b.r+1){const nx=dx/d,ny=dy/d;ball.x=b.x+nx*(ball.r+b.r+2);ball.y=b.y+ny*(ball.r+b.r+2);const dot=ball.vx*nx+ball.vy*ny;ball.vx=(ball.vx-2*dot*nx)*1.15;ball.vy=(ball.vy-2*dot*ny)*1.15;const spd=Math.sqrt(ball.vx*ball.vx+ball.vy*ball.vy);if(spd>14){ball.vx=ball.vx/spd*14;ball.vy=ball.vy/spd*14;}b.hit=8;addScore(100);}if(b.hit>0)b.hit--;}
-  for(const g of GUTTERS)reflectSeg(ball,g.x1,g.y1,g.x2,g.y2);
-  reflectFlipper(ball,LF,lDown);reflectFlipper(ball,RF,rDown);
-  if(ball.y>H+30){balls--;document.getElementById('p-ball').textContent=balls;if(balls<=0){gameOver();return;}resetBall();}
+// BLACKJACK
+(function(){
+const SUITS=['♠','♥','♦','♣'];
+const RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+let deck=[],playerHand=[],dealerHand=[],balance=100,bet=5,gameOver=true;
+
+function buildDeck(){
+  deck=[];
+  for(let s of SUITS) for(let r of RANKS) deck.push({s,r});
+  // shuffle
+  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
 }
-function reflectFlipper(b,p,down){const e=flipperEnd(p,down),cp=closestSeg(b.x,b.y,p.px,p.py,e.x,e.y),dx=b.x-cp.x,dy=b.y-cp.y,d=Math.sqrt(dx*dx+dy*dy);if(d<b.r+7){const nx=dx/(d||1),ny=dy/(d||1);b.x=cp.x+nx*(b.r+8);b.y=cp.y+ny*(b.r+8);const dot=b.vx*nx+b.vy*ny;b.vx-=2*dot*nx;b.vy-=2*dot*ny;if(down)b.vy-=5;if(b.vy>-1)b.vy=-1;}}
-function reflectSeg(b,x1,y1,x2,y2){const cp=closestSeg(b.x,b.y,x1,y1,x2,y2),dx=b.x-cp.x,dy=b.y-cp.y,d=Math.sqrt(dx*dx+dy*dy);if(d<b.r+3){const nx=dx/(d||1),ny=dy/(d||1);b.x=cp.x+nx*(b.r+4);b.y=cp.y+ny*(b.r+4);const dot=b.vx*nx+b.vy*ny;b.vx-=2*dot*nx*0.85;b.vy-=2*dot*ny*0.85;}}
-function closestSeg(px,py,ax,ay,bx,by){const dx=bx-ax,dy=by-ay,len2=dx*dx+dy*dy;if(len2===0)return{x:ax,y:ay};const t=Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/len2));return{x:ax+t*dx,y:ay+t*dy};}
-function addScore(n){score+=n;document.getElementById('p-score').textContent=score;if(score>high){high=score;document.getElementById('p-high').textContent=high;}}
-function gameOver(){running=false;cancelAnimationFrame(raf);pDraw();ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,W,H);ctx.fillStyle='#ffdd44';ctx.font='bold 34px VT323,monospace';ctx.textAlign='center';ctx.fillText('GAME OVER',W/2,H/2-20);ctx.fillStyle='#fff';ctx.font='20px VT323,monospace';ctx.fillText('SCORE: '+score,W/2,H/2+8);ctx.fillText('DBL-CLICK TO REPLAY',W/2,H/2+32);ctx.textAlign='left';window.removeEventListener('keydown',pKey);window.removeEventListener('keyup',pKeyUp);}
-function pDraw(){
-  const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#0a0030');grad.addColorStop(1,'#150050');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
-  ctx.strokeStyle='#6699ff';ctx.lineWidth=4;ctx.lineCap='butt';ctx.beginPath();ctx.moveTo(22,0);ctx.lineTo(22,H);ctx.stroke();ctx.beginPath();ctx.moveTo(298,0);ctx.lineTo(298,H);ctx.stroke();
-  ctx.lineCap='round';for(const g of GUTTERS){ctx.beginPath();ctx.moveTo(g.x1,g.y1);ctx.lineTo(g.x2,g.y2);ctx.stroke();}
-  for(const b of BUMPERS){const hit=b.hit>0;const grd=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r*2);grd.addColorStop(0,hit?'rgba(255,200,0,0.4)':'rgba(255,80,0,0.3)');grd.addColorStop(1,'transparent');ctx.fillStyle=grd;ctx.beginPath();ctx.arc(b.x,b.y,b.r*2,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fillStyle=hit?'#ffcc00':'#ff4400';ctx.fill();ctx.strokeStyle=hit?'#fff':'#ff8800';ctx.lineWidth=2;ctx.stroke();ctx.beginPath();ctx.arc(b.x,b.y,b.r-5,0,Math.PI*2);ctx.fillStyle=hit?'#fff8cc':'#1a0000';ctx.fill();ctx.fillStyle=hit?'#ff8800':'#ff6600';ctx.font='12px sans-serif';ctx.textAlign='center';ctx.fillText('★',b.x,b.y+4);ctx.textAlign='left';ctx.fillStyle='rgba(255,150,50,0.7)';ctx.font='10px VT323,monospace';ctx.textAlign='center';ctx.fillText('100',b.x,b.y+b.r+11);ctx.textAlign='left';}
-  ctx.strokeStyle='#333366';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(285,180);ctx.lineTo(285,440);ctx.stroke();
-  drawFlipper(LF,lDown);drawFlipper(RF,rDown);
-  if(ball){const bg=ctx.createRadialGradient(ball.x-2,ball.y-2,1,ball.x,ball.y,ball.r);bg.addColorStop(0,'#ffffff');bg.addColorStop(0.4,'#dddddd');bg.addColorStop(1,'#888888');ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fillStyle=bg;ctx.fill();ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1;ctx.stroke();}
-  if(launching){ctx.fillStyle='rgba(0,0,20,0.65)';ctx.fillRect(30,210,260,34);ctx.fillStyle='#ffff88';ctx.font='17px VT323,monospace';ctx.textAlign='center';ctx.fillText('>> PRESS SPACE TO LAUNCH <<',W/2,231);ctx.textAlign='left';}
+
+function cardVal(r){
+  if(['J','Q','K'].includes(r))return 10;
+  if(r==='A')return 11;
+  return parseInt(r);
 }
-function drawFlipper(p,down){const e=flipperEnd(p,down),grad=ctx.createLinearGradient(p.px,p.py,e.x,e.y);grad.addColorStop(0,'#aaddff');grad.addColorStop(1,'#4488cc');ctx.strokeStyle=grad;ctx.lineWidth=9;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(p.px,p.py);ctx.lineTo(e.x,e.y);ctx.stroke();ctx.fillStyle='#88bbff';ctx.beginPath();ctx.arc(p.px,p.py,5,0,Math.PI*2);ctx.fill();}
+
+function handVal(hand){
+  let val=0,aces=0;
+  for(const c of hand){val+=cardVal(c.r);if(c.r==='A')aces++;}
+  while(val>21&&aces>0){val-=10;aces--;}
+  return val;
+}
+
+function deal(){return deck.pop();}
+
+function renderCard(c,hidden=false){
+  const red=['♥','♦'].includes(c.s);
+  const div=document.createElement('div');
+  div.style.cssText=`width:44px;height:64px;background:#fff;border:2px solid #555;border-top:1px solid #fff;border-left:1px solid #fff;display:flex;flex-direction:column;justify-content:space-between;padding:2px 3px;font-family:'VT323',monospace;font-size:16px;color:${hidden?'#00006a':(red?'#cc0000':'#000')};cursor:default;background:${hidden?'repeating-linear-gradient(45deg,#000080,#000080 3px,#0000aa 3px,#0000aa 6px)':'#fff'};`;
+  if(!hidden){
+    div.innerHTML=`<span>${c.r}${c.s}</span><span style="align-self:flex-end;transform:rotate(180deg)">${c.r}${c.s}</span>`;
+  }
+  return div;
+}
+
+function renderHands(hideDealer=true){
+  const pc=document.getElementById('bj-player-cards');
+  const dc=document.getElementById('bj-dealer-cards');
+  pc.innerHTML=''; dc.innerHTML='';
+  playerHand.forEach(c=>pc.appendChild(renderCard(c)));
+  dealerHand.forEach((c,i)=>dc.appendChild(renderCard(c,hideDealer&&i===1)));
+  document.getElementById('bj-player-val').textContent=`(${handVal(playerHand)})`;
+  document.getElementById('bj-dealer-val').textContent=hideDealer?'(?)':`(${handVal(dealerHand)})`;
+}
+
+function setMsg(m){document.getElementById('bj-msg').textContent=m;}
+function updateBalance(){document.getElementById('bj-balance').textContent=`${balance}`;}
+function updateBet(){document.getElementById('bj-bet').textContent=`${bet}`;}
+
+function showBetControls(){
+  document.getElementById('bj-bet-controls').style.display='flex';
+  document.getElementById('bj-action-controls').style.display='none';
+  document.getElementById('bj-newgame-controls').style.display='none';
+}
+function showActionControls(){
+  document.getElementById('bj-bet-controls').style.display='none';
+  document.getElementById('bj-action-controls').style.display='flex';
+  document.getElementById('bj-newgame-controls').style.display='none';
+  document.getElementById('bj-double-btn').disabled=playerHand.length>2||balance<bet;
+}
+function showNewGame(){
+  document.getElementById('bj-bet-controls').style.display='none';
+  document.getElementById('bj-action-controls').style.display='none';
+  document.getElementById('bj-newgame-controls').style.display='flex';
+}
+
+window.bjChangeBet=function(n){
+  if(!gameOver)return;
+  const nb=Math.max(5,Math.min(balance,bet+n));
+  bet=nb; updateBet();
+};
+
+window.bjDeal=function(){
+  if(balance<bet){setMsg('Not enough balance!');return;}
+  if(deck.length<15)buildDeck();
+  balance-=bet; updateBalance();
+  playerHand=[deal(),deal()];
+  dealerHand=[deal(),deal()];
+  gameOver=false;
+  renderHands(true);
+  setMsg('');
+  // check natural blackjack
+  if(handVal(playerHand)===21){
+    endRound();
+    return;
+  }
+  showActionControls();
+};
+
+window.bjHit=function(){
+  playerHand.push(deal());
+  renderHands(true);
+  if(handVal(playerHand)>21){endRound();}
+  else if(handVal(playerHand)===21){endRound();}
+  else{showActionControls();}
+};
+
+window.bjStand=function(){endRound();};
+
+window.bjDouble=function(){
+  if(balance<bet){setMsg('Not enough to double!');return;}
+  balance-=bet; bet*=2; updateBalance(); updateBet();
+  playerHand.push(deal());
+  renderHands(true);
+  endRound();
+};
+
+function endRound(){
+  gameOver=true;
+  // dealer draws
+  while(handVal(dealerHand)<17) dealerHand.push(deal());
+  renderHands(false);
+  const pv=handVal(playerHand),dv=handVal(dealerHand);
+  let msg='';
+  if(pv>21){msg='Bust! You lose.';}
+  else if(dv>21){balance+=bet*2;msg=`Dealer busts! +${bet}`;}
+  else if(pv===21&&playerHand.length===2&&!(dv===21&&dealerHand.length===2)){
+    const win=Math.floor(bet*2.5);balance+=win;msg=`Blackjack! +${win}`;
+  }
+  else if(pv>dv){balance+=bet*2;msg=`You win! +${bet}`;}
+  else if(pv===dv){balance+=bet;msg=`Push. Bet returned.`;}
+  else{msg=`Dealer wins. -${bet}`;}
+  updateBalance();
+  setMsg(msg);
+  // reset bet if too high
+  if(bet>balance)bet=Math.max(5,Math.floor(balance/5)*5);
+  updateBet();
+  if(balance<5){setMsg(msg+' — Out of money! Reloading...');setTimeout(()=>{balance=100;bet=5;updateBalance();updateBet();showBetControls();setMsg('New game — $100 loaded!');},2000);return;}
+  showNewGame();
+}
+
+window.bjNewRound=function(){bet=Math.min(bet,balance);updateBet();showBetControls();setMsg('');renderHands(false);document.getElementById('bj-player-cards').innerHTML='';document.getElementById('bj-dealer-cards').innerHTML='';document.getElementById('bj-player-val').textContent='';document.getElementById('bj-dealer-val').textContent='';};
+
+// add button styles
+const st=document.createElement('style');
+st.textContent=`.bj-btn{font-family:'VT323',monospace;font-size:16px;background:#c0c0c0;border-top:2px solid #fff;border-left:2px solid #fff;border-bottom:2px solid #555;border-right:2px solid #555;padding:2px 10px;cursor:pointer;color:#000;}.bj-btn:active{border-top:2px solid #555;border-left:2px solid #555;border-bottom:2px solid #fff;border-right:2px solid #fff;}.bj-btn:disabled{color:#888;cursor:default;}`;
+document.head.appendChild(st);
+
+buildDeck();
+})();
 </script>
 </body>
 </html>
