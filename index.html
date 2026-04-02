@@ -2,109 +2,180 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=900">
 <title>lampie.net</title>
 <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'VT323', monospace; user-select: none; background: #008080; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 100vw; height: 100vh; overflow: hidden; font-family: 'VT323', monospace; user-select: none;
+  background: #008080; background-image: url('wallpaper.jpg'); background-size: cover; background-position: center; }
 
-  /* TASKBAR */
-  #taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 34px; background: #c0c0c0; border-top: 2px solid #fff; display: flex; align-items: center; padding: 0 4px; gap: 4px; z-index: 9999; }
-  #start-btn { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 15px; font-weight: bold; padding: 3px 10px; cursor: pointer; font-family: 'VT323', monospace; }  
-  #start-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
-  #taskbar-clock { margin-left: auto; background: #c0c0c0; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 2px 10px; font-size: 15px; color: #000; font-family: 'VT323', monospace; }
-  .taskbar-item { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 14px; padding: 2px 10px; cursor: pointer; display: none; font-family: 'VT323', monospace; }
-  .taskbar-item:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+/* TASKBAR */
+#taskbar { position: fixed; bottom: 0; left: 0; right: 0; height: 34px; background: #c0c0c0;
+  border-top: 2px solid #fff; display: flex; align-items: center; padding: 0 4px; gap: 4px; z-index: 9999; }
+#start-btn { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff;
+  border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 15px;
+  font-weight: bold; padding: 3px 10px; cursor: pointer; font-family: 'VT323', monospace; }
+#start-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+#taskbar-clock { margin-left: auto; background: #c0c0c0; border-top: 1px solid #555; border-left: 1px solid #555;
+  border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 2px 10px; font-size: 15px; color: #000; font-family: 'VT323', monospace; }
+.taskbar-item { background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff;
+  border-bottom: 2px solid #555; border-right: 2px solid #555; color: #000; font-size: 13px;
+  padding: 2px 8px; cursor: pointer; display: none; font-family: 'VT323', monospace; white-space: nowrap; }
 
-  /* DESKTOP ICONS */
-  .desktop-icon { position: absolute; width: 72px; text-align: center; cursor: pointer; padding: 4px; }
-  .desktop-icon:hover .icon-label { background: #000080; color: #fff; }
-  .icon-img { width: 56px; height: 56px; margin: 0 auto 4px; display: flex; align-items: center; justify-content: center; font-size: 36px; background: transparent; color: #fff; font-weight: bold; font-family: 'VT323', monospace; text-shadow: 1px 1px #000; }
-  .icon-label { font-size: 14px; color: #fff; text-shadow: 1px 1px #000; font-family: 'VT323', monospace; padding: 1px 3px; }
-  .desktop-icon { position: absolute; width: 80px; text-align: center; cursor: pointer; padding: 4px; }
+/* DESKTOP ICONS */
+.desktop-icon { position: absolute; width: 80px; text-align: center; cursor: pointer; padding: 4px; }
+.desktop-icon:hover .icon-label { background: #000080; color: #fff; }
+.icon-img { width: 48px; height: 48px; margin: 0 auto 4px; display: flex; align-items: center;
+  justify-content: center; font-size: 32px; background: transparent; font-family: 'VT323', monospace; }
+.icon-img img { width: 48px; height: 48px; image-rendering: pixelated; }
+.icon-label { font-size: 12px; color: #fff; text-shadow: 1px 1px #000; font-family: 'VT323', monospace; padding: 1px 3px; }
 
-  /* WIN95 WINDOW */
-  .win { position: absolute; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; display: none; flex-direction: column; z-index: 100; }
-  .win.open { display: flex; }
+/* WIN95 WINDOW */
+.win { position: absolute; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff;
+  border-bottom: 2px solid #555; border-right: 2px solid #555; display: none; flex-direction: column; z-index: 100; }
+.win.open { display: flex; }
+.titlebar { background: #000080; padding: 3px 4px; display: flex; align-items: center; gap: 4px; cursor: move; flex-shrink: 0; }
+.titlebar-icon { font-size: 13px; color: #fff; font-family: 'VT323', monospace; flex-shrink: 0; width: 16px; text-align: center; }
+.titlebar-title { flex: 1; font-size: 14px; color: #fff; font-family: 'VT323', monospace; }
+.win-btns { display: flex; gap: 2px; }
+.win-btn { width: 18px; height: 16px; background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff;
+  border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; color: #000; font-family: 'VT323', monospace; font-weight: bold; }
+.win-btn:active { border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; }
+.menubar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 2px 4px; font-size: 14px;
+  display: flex; gap: 0; flex-shrink: 0; font-family: 'VT323', monospace; }
+.menubar span { padding: 2px 8px; cursor: default; color: #000; }
+.menubar span:hover { background: #000080; color: #fff; }
+.addrbar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 3px 6px; display: flex;
+  align-items: center; gap: 4px; flex-shrink: 0; font-family: 'VT323', monospace; font-size: 14px; }
+.addr-box { flex: 1; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555;
+  border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 1px 6px; font-size: 13px; color: #000; font-family: 'VT323', monospace; }
+.nav-btn { background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff;
+  border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; padding: 1px 6px; cursor: pointer; color: #000; }
+.win-body { overflow-y: auto; flex: 1; background: #c0c0c0; }
 
-  /* TITLE BAR */
-  .titlebar { background: #000080; padding: 3px 4px; display: flex; align-items: center; gap: 4px; cursor: move; flex-shrink: 0; }
-  .titlebar-icon { font-size: 13px; font-weight: bold; color: #fff; font-family: 'VT323', monospace; flex-shrink: 0; width: 16px; text-align: center; }
-  .titlebar-title { flex: 1; font-size: 14px; color: #fff; font-family: 'VT323', monospace; letter-spacing: 0.5px; }
-  .win-btns { display: flex; gap: 2px; }
-  .win-btn { width: 18px; height: 16px; background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #000; font-family: 'VT323', monospace; font-weight: bold; }
-  .win-btn:active { border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; }
+/* SITE */
+#site { font-family: 'VT323', monospace; font-size: 18px; color: #000; padding: 10px 14px; background: #c0c0c0; }
+#site a { color: #00008b; } #site a:visited { color: #551a8b; } #site a:hover { color: #cc0000; }
+#site h1 { color: #000; font-size: 44px; margin: 0; }
+#site h2 { color: #000; margin: 0 0 6px 0; }
+#site hr { border-top: 1px solid #555; border-bottom: 1px solid #fff; margin: 8px 0; }
+.marquee-wrap { background: #000080; color: #fff; padding: 2px 0; font-size: 14px; display: block;
+  margin-bottom: 8px; overflow: hidden; white-space: nowrap; width: 100%; }
+.marquee-inner { display: inline-block; padding-left: 100%; animation: marquee 18s linear infinite; }
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+.social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 0; font-size: 20px; max-width: 380px; }
+.social-grid a { text-decoration: underline; }
+.greyed { color: #888; text-decoration: underline; cursor: default; pointer-events: none; }
+.layout { display: flex; gap: 14px; align-items: flex-start; }
+.left { flex: 1; min-width: 0; } .right { width: 190px; flex-shrink: 0; }
 
-  /* MENU BAR */
-  .menubar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 2px 4px; font-size: 14px; display: flex; gap: 0; flex-shrink: 0; font-family: 'VT323', monospace; }
-  .menubar span { padding: 2px 8px; cursor: default; color: #000; }
-  .menubar span:hover { background: #000080; color: #fff; }
+/* CHAT */
+.chat-board { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; background: #c0c0c0; padding: 5px; }
+.chat-title { background: #000080; color: #fff; font-size: 13px; padding: 2px 6px; margin-bottom: 5px; font-family: 'VT323', monospace; }
+.chat-messages { height: 200px; overflow-y: auto; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 3px 5px; margin-bottom: 5px; font-size: 13px; }
+.chat-msg { margin-bottom: 4px; border-bottom: 1px solid #eee; padding-bottom: 2px; line-height: 1.3; }
+.chat-msg .name { color: #000080; font-weight: bold; } .chat-msg .time { color: #888; font-size: 11px; margin-left: 3px; } .chat-msg .text { display: block; color: #000; }
+.chat-input { display: flex; flex-direction: column; gap: 3px; }
+.chat-input input, .chat-input textarea { font-family: 'VT323', monospace; font-size: 13px; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; background: #fff; padding: 2px 4px; width: 100%; color: #000; }
+.chat-input textarea { resize: none; height: 36px; }
+.chat-btn { font-family: 'VT323', monospace; font-size: 13px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; padding: 2px 12px; cursor: pointer; align-self: flex-end; color: #000; }
+.chat-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+.chat-empty { color: #888; font-style: italic; font-size: 12px; padding: 3px; }
+.chat-note { font-size: 10px; color: #666; text-align: center; padding: 2px; font-style: italic; }
 
-  /* ADDRESS BAR */
-  .addrbar { background: #c0c0c0; border-bottom: 1px solid #888; padding: 3px 6px; display: flex; align-items: center; gap: 4px; flex-shrink: 0; font-family: 'VT323', monospace; font-size: 14px; }
-  .addr-box { flex: 1; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 1px 6px; font-size: 13px; color: #000; font-family: 'VT323', monospace; }
-  .nav-btn { background: #c0c0c0; border-top: 1px solid #fff; border-left: 1px solid #fff; border-bottom: 1px solid #555; border-right: 1px solid #555; font-size: 12px; padding: 1px 6px; cursor: pointer; color: #000; font-family: 'VT323', monospace; }
+/* FOLDER */
+.folder-body { padding: 8px; background: #c0c0c0; }
+.folder-item { display: flex; align-items: center; gap: 8px; padding: 4px 6px; cursor: pointer; font-family: 'VT323', monospace; font-size: 15px; }
+.folder-item:hover { background: #000080; color: #fff; }
+.folder-item img { width: 24px; height: 24px; image-rendering: pixelated; }
 
-  .win-body { overflow-y: auto; flex: 1; background: #c0c0c0; }
+/* 404 */
+.err-body { padding: 20px; text-align: center; font-family: 'VT323', monospace; }
+.err-body h1 { font-size: 48px; color: #000080; }
+.err-body p { font-size: 18px; margin-top: 8px; }
 
-  /* SITE */
-  #site { font-family: 'VT323', monospace; font-size: 20px; color: #000; padding: 12px 16px; background: #c0c0c0; }
-  #site a { color: #00008b; } #site a:visited { color: #551a8b; } #site a:hover { color: #cc0000; }
-  #site h1 { color: #000; font-size: 46px; margin: 0; }
-  #site h2 { color: #000; margin: 0 0 6px 0; }
-  #site hr { border-top: 1px solid #555; border-bottom: 1px solid #fff; margin: 10px 0; }
-  .marquee-wrap { background: #000080; color: #fff; padding: 2px 0; font-size: 15px; display: block; margin-bottom: 8px; overflow: hidden; white-space: nowrap; }
-  .marquee-inner { display: inline-block; animation: marquee 18s linear infinite; }
-  @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-  .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 0; font-size: 24px; max-width: 420px; }
-  .social-grid a { text-decoration: underline; }
-  .greyed { color: #888; text-decoration: underline; cursor: default; pointer-events: none; }
-  .layout { display: flex; gap: 20px; align-items: flex-start; }
-  .left { flex: 1; min-width: 0; } .right { width: 220px; flex-shrink: 0; }
+/* BLACKJACK */
+#bj-wrap { background: #006400; padding: 8px; font-family: 'VT323', monospace; color: #fff; font-size: 15px; }
+.bj-btn { font-family: 'VT323', monospace; font-size: 14px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; padding: 2px 10px; cursor: pointer; color: #000; }
+.bj-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
+.bj-btn:disabled { color: #888; cursor: default; }
 
-  /* CHAT */
-  .chat-board { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; background: #c0c0c0; padding: 6px; }
-  .chat-title { background: #000080; color: #fff; font-size: 14px; padding: 2px 6px; margin-bottom: 6px; font-family: 'VT323', monospace; }
-  .chat-messages { height: 260px; overflow-y: auto; background: #fff; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; padding: 4px 6px; margin-bottom: 6px; font-size: 14px; }
-  .chat-msg { margin-bottom: 5px; border-bottom: 1px solid #ddd; padding-bottom: 3px; line-height: 1.3; }
-  .chat-msg .name { color: #000080; font-weight: bold; } .chat-msg .time { color: #888; font-size: 12px; margin-left: 4px; } .chat-msg .text { display: block; color: #000; }
-  .chat-input { display: flex; flex-direction: column; gap: 4px; }
-  .chat-input input, .chat-input textarea { font-family: 'VT323', monospace; font-size: 14px; border-top: 1px solid #555; border-left: 1px solid #555; border-bottom: 1px solid #fff; border-right: 1px solid #fff; background: #fff; padding: 2px 4px; width: 100%; color: #000; }
-  .chat-input textarea { resize: none; height: 44px; }
-  .chat-btn { font-family: 'VT323', monospace; font-size: 14px; background: #c0c0c0; border-top: 2px solid #fff; border-left: 2px solid #fff; border-bottom: 2px solid #555; border-right: 2px solid #555; padding: 2px 14px; cursor: pointer; align-self: flex-end; color: #000; }
-  .chat-btn:active { border-top: 2px solid #555; border-left: 2px solid #555; border-bottom: 2px solid #fff; border-right: 2px solid #fff; }
-  .chat-empty { color: #888; font-style: italic; font-size: 13px; padding: 4px; }
+/* MUSIC PLAYER */
+#pinball-ui { background: #c0c0c0; padding: 4px 10px; font-size: 14px; display: flex; justify-content: space-between; border-bottom: 1px solid #888; color: #000; font-family: 'VT323', monospace; }
 
-  /* PINBALL */
-  #pinball-canvas { display: block; }
-  #pinball-ui { background: #c0c0c0; padding: 4px 10px; font-size: 14px; display: flex; justify-content: space-between; border-bottom: 1px solid #888; color: #000; font-family: 'VT323', monospace; }
-  #pinball-hint { background: #000080; color: #fff; font-size: 13px; text-align: center; padding: 2px; font-family: 'VT323', monospace; letter-spacing: 1px; }
+/* SHOW REMINDER BUBBLE */
+#show-bubble { position: fixed; bottom: 50px; right: 16px; background: #ffff99; border: 2px solid #000;
+  border-radius: 8px; padding: 8px 10px; font-family: 'VT323', monospace; font-size: 14px; max-width: 200px;
+  z-index: 9998; box-shadow: 2px 2px #555; display: block; }
+#show-bubble::after { content: ''; position: absolute; bottom: -10px; right: 20px; width: 0; height: 0;
+  border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 10px solid #000; }
+#show-bubble-close { position: absolute; top: 2px; right: 4px; cursor: pointer; font-size: 12px; color: #555; }
+
+/* no mobile overrides — pinch to zoom on mobile */
 </style>
 </head>
 <body>
 
-<!-- DESKTOP ICONS -->
-<div class="desktop-icon" style="top:20px;left:16px;" ondblclick="openWin('site-win')">
-  <div class="icon-img">!</div>
-  <div class="icon-label">lampie.net</div>
-</div>
-<div class="desktop-icon" style="top:110px;left:16px;" ondblclick="openWin('blackjack-win')">
-  <div class="icon-img">♠</div>
-  <div class="icon-label">Blackjack.exe</div>
+<!-- SHOW REMINDER BUBBLE -->
+<div id="show-bubble">
+  <span id="show-bubble-close" onclick="document.getElementById('show-bubble').style.display='none'">✕</span>
+  <b>JUST A REMINDER</b><br>
+  April 10 — IKU @<br>VSHOW Karaoke<br>
+  Queens, NY 11354
 </div>
 
-<div class="desktop-icon" style="top:200px;left:16px;" ondblclick="openWin('songs-win')">
-  <div class="icon-img">♪</div>
+<div class="desktop-icon" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
+  <div class="ico-box">!</div>
+  <div class="icon-label">lampie.net</div>
+</div>
+<div class="desktop-icon" style="top:120px;left:16px;" ondblclick="openWin('blackjack-win')">
+  <div class="ico-box">♠</div>
+  <div class="icon-label">Blackjack.exe</div>
+</div>
+<div class="desktop-icon" style="top:224px;left:16px;" ondblclick="openWin('songs-win')">
+  <div class="ico-box">♪</div>
   <div class="icon-label">Songs I Like</div>
 </div>
-<div class="desktop-icon" style="top:290px;left:16px;" ondblclick="openWin('readme-win')">
-  <div class="icon-img">📄</div>
+<div class="desktop-icon" style="top:328px;left:16px;" ondblclick="openWin('mixes-win')">
+  <div class="ico-box">📁</div>
+  <div class="icon-label">Mixes</div>
+</div>
+<div class="desktop-icon" style="top:432px;left:16px;" ondblclick="openWin('readme-win')">
+  <div class="ico-box">📄</div>
   <div class="icon-label">readme.txt</div>
 </div>
+
+<!-- DESKTOP ICONS — column 2 (socials) -->
+<div class="desktop-icon" style="top:16px;left:120px;" ondblclick="openLink('http://instagram.com/jaaicob')">
+  <div class="ico-box" style="color:#c13584;">ig</div>
+  <div class="icon-label">Instagram</div>
+</div>
+<div class="desktop-icon" style="top:120px;left:120px;" ondblclick="openLink('https://www.tiktok.com/@asiangarbage')">
+  <div class="ico-box" style="color:#000;font-size:18px;">tiktok</div>
+  <div class="icon-label">TikTok</div>
+</div>
+<div class="desktop-icon" style="top:224px;left:120px;" ondblclick="openLink('https://soundcloud.com/lamp-ie')">
+  <div class="ico-box" style="color:#ff5500;">sc</div>
+  <div class="icon-label">Soundcloud</div>
+</div>
+<div class="desktop-icon" style="top:328px;left:120px;" ondblclick="openLink('https://www.twitch.tv/worldsbestfoodie')">
+  <div class="ico-box" style="color:#6441a5;">tv</div>
+  <div class="icon-label">Twitch</div>
+</div>
+<div class="desktop-icon" style="top:432px;left:120px;" ondblclick="openWin('youtube-win')">
+  <div class="ico-box" style="color:#ff0000;">yt</div>
+  <div class="icon-label">YouTube</div>
+</div>
+<div class="desktop-icon" style="top:536px;left:120px;" ondblclick="openWin('spotify-win')">
+  <div class="ico-box" style="color:#1db954;">sp</div>
+  <div class="icon-label">Spotify</div>
+</div>
+
 <!-- SITE WINDOW -->
-<div class="win" id="site-win" style="top:40px;left:80px;width:720px;">
-  <div class="titlebar" onmousedown="startDrag(event,'site-win')">
+<div class="win" id="site-win" style="top:40px;left:220px;width:560px;">
+  <div class="titlebar" onmousedown="startDrag(event,'site-win')" ontouchstart="startDrag(event,'site-win')">
     <span class="titlebar-icon">!</span>
     <div class="titlebar-title">lampie.net - Microsoft Internet Explorer</div>
     <div class="win-btns">
@@ -115,14 +186,13 @@
   </div>
   <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Favorites</span><span>Tools</span><span>Help</span></div>
   <div class="addrbar">
-    <button class="nav-btn">◀</button>
-    <button class="nav-btn">▶</button>
+    <button class="nav-btn">◀</button><button class="nav-btn">▶</button>
     <div class="addr-box">http://www.lampie.net/</div>
     <button class="nav-btn">Go</button>
   </div>
   <div class="win-body">
     <div id="site">
-      <div class="marquee-wrap"><span class="marquee-inner">&nbsp;yuhhhhh lampie.net yuhhh pop out lampie.net yuhhh type shi type shi yuhhhh</span></div>
+      <div class="marquee-wrap"><span class="marquee-inner">yuhhhhh lampie.net yuhhh pop out lampie.net yuhhh type shi type shi yuhhhh</span></div>
       <h1>Lampie !</h1>
       <hr>
       <div class="layout">
@@ -143,13 +213,14 @@
           <small><small>opening for IKU n shi</small></small></p>
           <hr>
           <h2>MIXES</h2>
-          <p>&#9658; <a href="https://soundcloud.com/lamp-ie/goldrush-dj-competition-2025">sometimes i mess around</a><br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
+          <p>&#9658; <a href="https://soundcloud.com/lamp-ie/goldrush-dj-competition-2025">sometimes i mess around</a><br>
+          &#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
           <hr>
           <h2>WATCH</h2>
           <p>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; ...<br>&#9658; coming soon...</p>
           <hr>
           <p><small>lampie 2026 &lt;3</small></p>
-          <p><small>visitors: <span id="visit-count" style="font-family:'VT323',monospace; background:#000; color:#0f0; padding:1px 6px; letter-spacing:2px;">000000</span></small></p>
+          <p><small>visitors: <span id="visit-count" style="font-family:'VT323',monospace;background:#000;color:#0f0;padding:1px 6px;letter-spacing:2px;">000000</span></small></p>
         </div>
         <div class="right">
           <div class="chat-board">
@@ -160,6 +231,7 @@
               <textarea id="chatText" placeholder="say something..." maxlength="200"></textarea>
               <button class="chat-btn" onclick="postMessage()">OK</button>
             </div>
+            <div class="chat-note">chat saves for all visitors</div>
           </div>
         </div>
       </div>
@@ -167,52 +239,9 @@
   </div>
 </div>
 
-<!-- README WINDOW -->
-<div class="win" id="readme-win" style="top:80px;left:180px;width:340px;">
-  <div class="titlebar" onmousedown="startDrag(event,'readme-win')">
-    <span class="titlebar-icon">📄</span>
-    <div class="titlebar-title">readme.txt - Notepad</div>
-    <div class="win-btns">
-      <div class="win-btn" onclick="minimizeWin('readme-win')">_</div>
-      <div class="win-btn">□</div>
-      <div class="win-btn" onclick="closeWin('readme-win','tb-readme')">✕</div>
-    </div>
-  </div>
-  <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
-  <div style="background:#fff; padding:10px 12px; font-family:'VT323',monospace; font-size:18px; color:#000; min-height:100px; border-top:1px solid #555;">
-    this is an early version, itll get cooler i promise!
-  </div>
-</div>
-
-<!-- SONGS I LIKE WINDOW -->
-<div class="win" id="songs-win" style="top:60px;left:320px;width:300px;">
-  <div class="titlebar" onmousedown="startDrag(event,'songs-win')">
-    <span class="titlebar-icon">♪</span>
-    <div class="titlebar-title">Songs I Like</div>
-    <div class="win-btns">
-      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
-      <div class="win-btn">□</div>
-      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
-    </div>
-  </div>
-  <!-- Winamp-style title bar -->
-  <div style="background:#c0c0c0; border-bottom:1px solid #888; padding:3px 8px; display:flex; justify-content:space-between; font-family:'VT323',monospace; font-size:15px; color:#000;">
-    <span>Lampie Music Player</span>
-    <span>&#9835;</span>
-  </div>
-  <div style="background:#000; height:28px; padding:0; overflow:hidden;">
-    <canvas id="winamp-vis" width="300" height="28" style="display:block;"></canvas>
-  </div>
-  <!-- SoundCloud embed -->
-  <iframe id="sc-player" width="300" height="300" scrolling="no" frameborder="no" allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lamp-ie/sets/songs-i-like&color=%2300ff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
-  </iframe>
-  <!-- Winamp bottom bar removed -->
-</div>
-
 <!-- BLACKJACK WINDOW -->
-<div class="win" id="blackjack-win" style="top:50px;left:240px;width:360px;">
-  <div class="titlebar" onmousedown="startDrag(event,'blackjack-win')">
+<div class="win" id="blackjack-win" style="top:50px;left:240px;width:320px;">
+  <div class="titlebar" onmousedown="startDrag(event,'blackjack-win')" ontouchstart="startDrag(event,'blackjack-win')">
     <span class="titlebar-icon">♠</span>
     <div class="titlebar-title">Blackjack.exe</div>
     <div class="win-btns">
@@ -222,106 +251,237 @@
     </div>
   </div>
   <div class="menubar"><span>Game</span><span>Help</span></div>
-  <div id="bj-wrap" style="background:#006400; padding:10px; font-family:'VT323',monospace; color:#fff; font-size:16px;">
-
-    <!-- Balance + bet -->
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; background:rgba(0,0,0,0.3); padding:4px 8px;">
-      <span>BALANCE: <b id="bj-balance">$100</b></span>
-      <span>BET: <b id="bj-bet">$5</b></span>
+  <div id="bj-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;background:rgba(0,0,0,0.3);padding:4px 8px;">
+      <span>BALANCE: <b id="bj-balance">$100</b></span><span>BET: <b id="bj-bet">$5</b></span>
     </div>
-
-    <!-- Dealer -->
     <div style="margin-bottom:6px;">
-      <div style="font-size:13px; color:#cfc;">DEALER <span id="bj-dealer-val"></span></div>
-      <div id="bj-dealer-cards" style="display:flex; gap:4px; flex-wrap:wrap; min-height:70px; margin-top:4px;"></div>
+      <div style="font-size:13px;color:#cfc;">DEALER <span id="bj-dealer-val"></span></div>
+      <div id="bj-dealer-cards" style="display:flex;gap:4px;flex-wrap:wrap;min-height:70px;margin-top:4px;"></div>
     </div>
-
-    <!-- Player -->
     <div style="margin-bottom:8px;">
-      <div style="font-size:13px; color:#cfc;">YOU <span id="bj-player-val"></span></div>
-      <div id="bj-player-cards" style="display:flex; gap:4px; flex-wrap:wrap; min-height:70px; margin-top:4px;"></div>
+      <div style="font-size:13px;color:#cfc;">YOU <span id="bj-player-val"></span></div>
+      <div id="bj-player-cards" style="display:flex;gap:4px;flex-wrap:wrap;min-height:70px;margin-top:4px;"></div>
     </div>
-
-    <!-- Message -->
-    <div id="bj-msg" style="text-align:center; font-size:20px; min-height:24px; color:#ffff88; margin-bottom:8px;"></div>
-
-    <!-- Bet controls -->
-    <div id="bj-bet-controls" style="display:flex; gap:4px; justify-content:center; margin-bottom:6px;">
+    <div id="bj-msg" style="text-align:center;font-size:18px;min-height:22px;color:#ffff88;margin-bottom:6px;"></div>
+    <div id="bj-bet-controls" style="display:flex;gap:4px;justify-content:center;margin-bottom:6px;">
       <button class="bj-btn" onclick="bjChangeBet(-5)">-$5</button>
       <button class="bj-btn" onclick="bjChangeBet(5)">+$5</button>
       <button class="bj-btn" onclick="bjChangeBet(10)">+$10</button>
       <button class="bj-btn" onclick="bjChangeBet(25)">+$25</button>
       <button class="bj-btn" onclick="bjDeal()">DEAL</button>
     </div>
-
-    <!-- Action controls -->
-    <div id="bj-action-controls" style="display:none; gap:4px; justify-content:center; margin-bottom:6px;">
+    <div id="bj-action-controls" style="display:none;gap:4px;justify-content:center;margin-bottom:6px;">
       <button class="bj-btn" onclick="bjHit()">HIT</button>
       <button class="bj-btn" onclick="bjStand()">STAND</button>
       <button class="bj-btn" onclick="bjDouble()" id="bj-double-btn">DOUBLE</button>
     </div>
-
-    <!-- New game button -->
-    <div id="bj-newgame-controls" style="display:none; justify-content:center; margin-bottom:6px;">
+    <div id="bj-newgame-controls" style="display:none;justify-content:center;margin-bottom:6px;">
       <button class="bj-btn" onclick="bjNewRound()">NEW ROUND</button>
     </div>
-
   </div>
 </div>
 
-<div style="position:fixed; bottom:36px; right:4px; font-family:'VT323',monospace; font-size:11px; color:rgba(255,255,255,0.5); z-index:999; pointer-events:none;">v0.0.9.1</div>
+<!-- SONGS WINDOW -->
+<div class="win" id="songs-win" style="top:60px;left:320px;width:300px;">
+  <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
+    <span class="titlebar-icon">♪</span>
+    <div class="titlebar-title">Lampie Music Player</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
+    </div>
+  </div>
+  <div style="background:#c0c0c0;border-bottom:1px solid #888;padding:3px 8px;display:flex;justify-content:space-between;font-family:'VT323',monospace;font-size:15px;color:#000;">
+    <span>Lampie Music Player</span><span>&#9835;</span>
+  </div>
+  <div style="background:#c0c0c0;height:32px;padding:2px 4px;">
+    <canvas id="winamp-vis" width="292" height="28" style="display:block;border-top:1px solid #555;border-left:1px solid #555;border-bottom:1px solid #fff;border-right:1px solid #fff;"></canvas>
+  </div>
+  <iframe id="sc-player" width="300" height="300" scrolling="no" frameborder="no" allow="autoplay"
+    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lamp-ie/sets/songs-i-like&color=%2300ff00&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
+  </iframe>
+</div>
+
+<!-- MIXES FOLDER WINDOW -->
+<div class="win" id="mixes-win" style="top:80px;left:260px;width:320px;">
+  <div class="titlebar" onmousedown="startDrag(event,'mixes-win')" ontouchstart="startDrag(event,'mixes-win')">
+    <span class="titlebar-icon">📁</span>
+    <div class="titlebar-title">Mixes</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('mixes-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('mixes-win','tb-mixes')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>File</span><span>Edit</span><span>View</span></div>
+  <div style="background:#c0c0c0;font-size:12px;padding:2px 6px;border-bottom:1px solid #888;font-family:'VT323',monospace;">1 object(s)</div>
+  <div class="win-body folder-body">
+    <div class="folder-item" ondblclick="openWin('mix1-win')">
+      <span style="font-size:20px;">🎵</span>
+      <span style="font-family:'VT323',monospace;font-size:15px;">sometimes i mess around.mp3</span>
+    </div>
+  </div>
+</div>
+
+<!-- MIX1 WINDOW -->
+<div class="win" id="mix1-win" style="top:100px;left:280px;width:300px;">
+  <div class="titlebar" onmousedown="startDrag(event,'mix1-win')" ontouchstart="startDrag(event,'mix1-win')">
+    <span class="titlebar-icon">🎵</span>
+    <div class="titlebar-title">sometimes i mess around.mp3</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('mix1-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('mix1-win','tb-mix1')">✕</div>
+    </div>
+  </div>
+  <div style="background:#c0c0c0;padding:4px 8px;font-family:'VT323',monospace;font-size:13px;border-bottom:1px solid #888;">
+    Windows Media Player
+  </div>
+  <div class="win-body" style="background:#000;padding:0;">
+    <iframe width="300" height="166" scrolling="no" frameborder="no" allow="autoplay"
+      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lamp-ie/goldrush-dj-competition-2025&color=%23c0c0c0&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false">
+    </iframe>
+  </div>
+</div>
+
+<!-- README WINDOW -->
+<div class="win" id="readme-win" style="top:80px;left:200px;width:320px;">
+  <div class="titlebar" onmousedown="startDrag(event,'readme-win')" ontouchstart="startDrag(event,'readme-win')">
+    <span class="titlebar-icon">📄</span>
+    <div class="titlebar-title">readme.txt - Notepad</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('readme-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('readme-win','tb-readme')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>File</span><span>Edit</span><span>Format</span><span>Help</span></div>
+  <div style="background:#fff;padding:10px 12px;font-family:'VT323',monospace;font-size:18px;color:#000;min-height:80px;border-top:1px solid #555;">
+    this is an early version, itll get cooler i promise!
+  </div>
+</div>
+
+<!-- YOUTUBE 404 -->
+<div class="win" id="youtube-win" style="top:60px;left:240px;width:380px;">
+  <div class="titlebar" onmousedown="startDrag(event,'youtube-win')" ontouchstart="startDrag(event,'youtube-win')">
+    <span class="titlebar-icon">▶</span>
+    <div class="titlebar-title">YouTube - Microsoft Internet Explorer</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('youtube-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('youtube-win','tb-youtube')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+  <div class="addrbar"><button class="nav-btn">◀</button><button class="nav-btn">▶</button>
+    <div class="addr-box">http://www.youtube.com/lampie</div><button class="nav-btn">Go</button></div>
+  <div class="win-body err-body">
+    <h1>404</h1>
+    <p>This page cannot be displayed.</p>
+    <p style="margin-top:12px;font-size:14px;color:#555;">coming soon... maybe</p>
+  </div>
+</div>
+
+<!-- SPOTIFY 404 -->
+<div class="win" id="spotify-win" style="top:70px;left:250px;width:380px;">
+  <div class="titlebar" onmousedown="startDrag(event,'spotify-win')" ontouchstart="startDrag(event,'spotify-win')">
+    <span class="titlebar-icon">🎧</span>
+    <div class="titlebar-title">Spotify - Microsoft Internet Explorer</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('spotify-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('spotify-win','tb-spotify')">✕</div>
+    </div>
+  </div>
+  <div class="menubar"><span>File</span><span>Edit</span><span>View</span><span>Help</span></div>
+  <div class="addrbar"><button class="nav-btn">◀</button><button class="nav-btn">▶</button>
+    <div class="addr-box">http://www.spotify.com/lampie</div><button class="nav-btn">Go</button></div>
+  <div class="win-body err-body">
+    <h1>404</h1>
+    <p>This page cannot be displayed.</p>
+    <p style="margin-top:12px;font-size:14px;color:#555;">coming soon... maybe</p>
+  </div>
+</div>
+
+<!-- TASKBAR -->
+<div style="position:fixed;bottom:36px;right:6px;font-family:'VT323',monospace;font-size:11px;color:rgba(255,255,255,0.5);z-index:9998;pointer-events:none;">v0.0.9.1</div>
 <div id="taskbar">
   <button id="start-btn">! Start</button>
   <div id="tb-site" class="taskbar-item" onclick="toggleWin('site-win')">! lampie.net</div>
-  <div id="tb-readme" class="taskbar-item" onclick="toggleWin('readme-win')">📄 readme.txt</div>
-  <div id="tb-songs" class="taskbar-item" onclick="toggleWin('songs-win')">♪ Songs I Like</div>
-  <div id="tb-blackjack" class="taskbar-item" onclick="toggleWin('blackjack-win')">♠ Blackjack.exe</div>
+  <div id="tb-blackjack" class="taskbar-item" onclick="toggleWin('blackjack-win')">♠ Blackjack</div>
+  <div id="tb-songs" class="taskbar-item" onclick="toggleWin('songs-win')">♪ Songs</div>
+  <div id="tb-mixes" class="taskbar-item" onclick="toggleWin('mixes-win')">📁 Mixes</div>
+  <div id="tb-mix1" class="taskbar-item" onclick="toggleWin('mix1-win')">🎵 mix</div>
+  <div id="tb-readme" class="taskbar-item" onclick="toggleWin('readme-win')">📄 readme</div>
+  <div id="tb-youtube" class="taskbar-item" onclick="toggleWin('youtube-win')">▶ YouTube</div>
+  <div id="tb-spotify" class="taskbar-item" onclick="toggleWin('spotify-win')">🎧 Spotify</div>
   <div id="taskbar-clock"></div>
 </div>
 
 <script>
-// MOBILE WINDOW FIX — override inline top/left/width on mobile
-function fixMobileWindows(){
-  if(window.innerWidth>600)return;
-  document.querySelectorAll('.win').forEach(w=>{
-    w.style.top='0px';
-    w.style.left='0px';
-    w.style.width='100vw';
-    w.style.maxWidth='100vw';
-    w.style.position='fixed';
-  });
-}
-const _origOpen=window.openWin;
-window.openWin=function(id){
-  if(typeof _origOpen==='function')_origOpen(id);
-  setTimeout(fixMobileWindows,10);
-};
-window.addEventListener('resize',fixMobileWindows);
-fixMobileWindows();
-
-// VISIT COUNTER
-
+// CLOCK
 function updateClock(){const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h%12||12;document.getElementById('taskbar-clock').textContent=hh+':'+String(m).padStart(2,'0')+' '+ap;}
 updateClock();setInterval(updateClock,10000);
 
-function openWin(id){const w=document.getElementById(id);w.classList.add('open');w.style.display='flex';const tb={['site-win']:'tb-site',['blackjack-win']:'tb-blackjack',['songs-win']:'tb-songs',['readme-win']:'tb-readme'}[id];if(tb)document.getElementById(tb).style.display='block';}
-function closeWin(id,tb){document.getElementById(id).classList.remove('open');document.getElementById(id).style.display='none';document.getElementById(tb).style.display='none';}
-function minimizeWin(id){document.getElementById(id).style.display='none';}
-function toggleWin(id){const w=document.getElementById(id);w.style.display=(w.style.display==='none')?'flex':'none';}
+// OPEN EXTERNAL LINK
+function openLink(url){window.open(url,'_blank');}
 
-let drag=null;
-function startDrag(e,id){const w=document.getElementById(id),r=w.getBoundingClientRect();drag={id,ox:e.clientX-r.left,oy:e.clientY-r.top};w.style.zIndex=200;}
-document.addEventListener('mousemove',e=>{if(!drag)return;const w=document.getElementById(drag.id);w.style.left=(e.clientX-drag.ox)+'px';w.style.top=(e.clientY-drag.oy)+'px';});
-document.addEventListener('mouseup',()=>drag=null);
-
-const STORAGE_KEY='lampie-chat-v2';
-async function loadMessages(){
-  try {
-    const r=await window.storage.get(STORAGE_KEY,true);
-    if(r&&r.value) renderMessages(JSON.parse(r.value));
-    else renderMessages([]);
-  } catch(e){ renderMessages([]); }
+// WINDOWS
+const WIN_TB={
+  'site-win':'tb-site','blackjack-win':'tb-blackjack','songs-win':'tb-songs',
+  'mixes-win':'tb-mixes','mix1-win':'tb-mix1','readme-win':'tb-readme',
+  'youtube-win':'tb-youtube','spotify-win':'tb-spotify'
+};
+function openWin(id){
+  const w=document.getElementById(id);
+  w.classList.add('open');w.style.display='flex';
+  const tb=WIN_TB[id];if(tb)document.getElementById(tb).style.display='block';
+  w.style.zIndex=200;
 }
+function closeWin(id,tb){
+  document.getElementById(id).classList.remove('open');
+  document.getElementById(id).style.display='none';
+  if(tb)document.getElementById(tb).style.display='none';
+}
+function minimizeWin(id){document.getElementById(id).style.display='none';}
+function toggleWin(id){
+  const w=document.getElementById(id);
+  if(w.style.display==='none'||!w.classList.contains('open')){openWin(id);}
+  else{w.style.display='none';}
+}
+
+// DRAG — mouse + touch
+let drag=null;
+function startDrag(e,id){
+  const w=document.getElementById(id);
+  const r=w.getBoundingClientRect();
+  const clientX=e.touches?e.touches[0].clientX:e.clientX;
+  const clientY=e.touches?e.touches[0].clientY:e.clientY;
+  drag={id,ox:clientX-r.left,oy:clientY-r.top};
+  w.style.zIndex=200;
+  e.preventDefault();
+}
+function onMove(e){
+  if(!drag)return;
+  const clientX=e.touches?e.touches[0].clientX:e.clientX;
+  const clientY=e.touches?e.touches[0].clientY:e.clientY;
+  const w=document.getElementById(drag.id);
+  w.style.left=(clientX-drag.ox)+'px';
+  w.style.top=(clientY-drag.oy)+'px';
+  e.preventDefault();
+}
+function onEnd(){drag=null;}
+document.addEventListener('mousemove',onMove);
+document.addEventListener('mouseup',onEnd);
+document.addEventListener('touchmove',onMove,{passive:false});
+document.addEventListener('touchend',onEnd);
+
+// CHAT — uses localStorage as fallback since storage API only works in Claude.ai
+const CHAT_KEY='lampie-chat-v3';
+function getChatMsgs(){try{const d=localStorage.getItem(CHAT_KEY);return d?JSON.parse(d):[]}catch(e){return[];}}
+function saveChatMsgs(msgs){try{localStorage.setItem(CHAT_KEY,JSON.stringify(msgs));}catch(e){}}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function renderMessages(msgs){
   const box=document.getElementById('chatMessages');
@@ -329,171 +489,126 @@ function renderMessages(msgs){
   box.innerHTML=msgs.map(m=>`<div class="chat-msg"><span class="name">${esc(m.name)}</span><span class="time">${m.time}</span><span class="text">${esc(m.text)}</span></div>`).join('');
   box.scrollTop=box.scrollHeight;
 }
+async function loadMessages(){
+  // try Claude storage first
+  try{const r=await window.storage.get(CHAT_KEY,true);if(r&&r.value){renderMessages(JSON.parse(r.value));return;}}catch(e){}
+  // fallback to localStorage
+  renderMessages(getChatMsgs());
+}
 async function postMessage(){
   const name=document.getElementById('chatName').value.trim()||'anon';
   const text=document.getElementById('chatText').value.trim();
   if(!text)return;
-  const now=new Date();
-  const time=now.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();
+  const now=new Date(),time=now.toLocaleDateString('en-US',{month:'numeric',day:'numeric'})+' '+now.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true}).toLowerCase();
   let msgs=[];
-  try {
-    const r=await window.storage.get(STORAGE_KEY,true);
-    if(r&&r.value) msgs=JSON.parse(r.value);
-  } catch(e){ msgs=[]; }
+  try{const r=await window.storage.get(CHAT_KEY,true);if(r&&r.value)msgs=JSON.parse(r.value);}catch(e){msgs=getChatMsgs();}
   msgs.push({name,text,time});
   if(msgs.length>50)msgs=msgs.slice(-50);
-  try {
-    await window.storage.set(STORAGE_KEY,JSON.stringify(msgs),true);
-  } catch(e){ console.error('storage error',e); }
+  try{await window.storage.set(CHAT_KEY,JSON.stringify(msgs),true);}catch(e){}
+  saveChatMsgs(msgs);
   document.getElementById('chatText').value='';
   renderMessages(msgs);
 }
 document.getElementById('chatText').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();postMessage();}});
-loadMessages();
-setInterval(loadMessages,8000);
+loadMessages();setInterval(loadMessages,8000);
+
+// VISIT COUNTER
+(async function(){
+  const KEY='lampie-visit-count';let count=0;
+  try{const r=await window.storage.get(KEY,true);if(r&&r.value)count=parseInt(r.value)||0;}catch(e){}
+  count++;
+  try{await window.storage.set(KEY,String(count),true);}catch(e){}
+  const el=document.getElementById('visit-count');
+  if(el)el.textContent=String(count).padStart(6,'0');
+})();
 
 // BLACKJACK
 (function(){
-const SUITS=['♠','♥','♦','♣'];
-const RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
-let deck=[],playerHand=[],dealerHand=[],balance=100,bet=5,gameOver=true;
-
-function buildDeck(){
-  deck=[];
-  for(let s of SUITS) for(let r of RANKS) deck.push({s,r});
-  // shuffle
-  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
-}
-
-function cardVal(r){
-  if(['J','Q','K'].includes(r))return 10;
-  if(r==='A')return 11;
-  return parseInt(r);
-}
-
-function handVal(hand){
-  let val=0,aces=0;
-  for(const c of hand){val+=cardVal(c.r);if(c.r==='A')aces++;}
-  while(val>21&&aces>0){val-=10;aces--;}
-  return val;
-}
-
-function deal(){return deck.pop();}
-
-function renderCard(c,hidden=false){
-  const red=['♥','♦'].includes(c.s);
-  const div=document.createElement('div');
-  div.style.cssText=`width:44px;height:64px;background:#fff;border:2px solid #555;border-top:1px solid #fff;border-left:1px solid #fff;display:flex;flex-direction:column;justify-content:space-between;padding:2px 3px;font-family:'VT323',monospace;font-size:16px;color:${hidden?'#00006a':(red?'#cc0000':'#000')};cursor:default;background:${hidden?'repeating-linear-gradient(45deg,#000080,#000080 3px,#0000aa 3px,#0000aa 6px)':'#fff'};`;
-  if(!hidden){
-    div.innerHTML=`<span>${c.r}${c.s}</span><span style="align-self:flex-end;transform:rotate(180deg)">${c.r}${c.s}</span>`;
+  const SUITS=['♠','♥','♦','♣'],RANKS=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+  let deck=[],playerHand=[],dealerHand=[],balance=100,bet=5,gameOver=true;
+  function buildDeck(){deck=[];for(let s of SUITS)for(let r of RANKS)deck.push({s,r});for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}}
+  function cardVal(r){if(['J','Q','K'].includes(r))return 10;if(r==='A')return 11;return parseInt(r);}
+  function handVal(hand){let v=0,a=0;for(const c of hand){v+=cardVal(c.r);if(c.r==='A')a++;}while(v>21&&a>0){v-=10;a--;}return v;}
+  function deal(){return deck.pop();}
+  function renderCard(c,hidden=false){
+    const red=['♥','♦'].includes(c.s);const div=document.createElement('div');
+    div.style.cssText=`width:40px;height:58px;background:${hidden?'repeating-linear-gradient(45deg,#000080,#000080 3px,#0000aa 3px,#0000aa 6px)':'#fff'};border:2px solid #555;border-top:1px solid #fff;border-left:1px solid #fff;display:flex;flex-direction:column;justify-content:space-between;padding:2px 3px;font-family:'VT323',monospace;font-size:14px;color:${hidden?'#00006a':(red?'#cc0000':'#000')};`;
+    if(!hidden)div.innerHTML=`<span>${c.r}${c.s}</span><span style="align-self:flex-end;transform:rotate(180deg)">${c.r}${c.s}</span>`;
+    return div;
   }
-  return div;
-}
-
-function renderHands(hideDealer=true){
-  const pc=document.getElementById('bj-player-cards');
-  const dc=document.getElementById('bj-dealer-cards');
-  pc.innerHTML=''; dc.innerHTML='';
-  playerHand.forEach(c=>pc.appendChild(renderCard(c)));
-  dealerHand.forEach((c,i)=>dc.appendChild(renderCard(c,hideDealer&&i===1)));
-  document.getElementById('bj-player-val').textContent=`(${handVal(playerHand)})`;
-  document.getElementById('bj-dealer-val').textContent=hideDealer?'(?)':`(${handVal(dealerHand)})`;
-}
-
-function setMsg(m){document.getElementById('bj-msg').textContent=m;}
-function updateBalance(){document.getElementById('bj-balance').textContent=`${balance}`;}
-function updateBet(){document.getElementById('bj-bet').textContent=`${bet}`;}
-
-function showBetControls(){
-  document.getElementById('bj-bet-controls').style.display='flex';
-  document.getElementById('bj-action-controls').style.display='none';
-  document.getElementById('bj-newgame-controls').style.display='none';
-}
-function showActionControls(){
-  document.getElementById('bj-bet-controls').style.display='none';
-  document.getElementById('bj-action-controls').style.display='flex';
-  document.getElementById('bj-newgame-controls').style.display='none';
-  document.getElementById('bj-double-btn').disabled=playerHand.length>2||balance<bet;
-}
-function showNewGame(){
-  document.getElementById('bj-bet-controls').style.display='none';
-  document.getElementById('bj-action-controls').style.display='none';
-  document.getElementById('bj-newgame-controls').style.display='flex';
-}
-
-window.bjChangeBet=function(n){
-  if(!gameOver)return;
-  const nb=Math.max(5,Math.min(balance,bet+n));
-  bet=nb; updateBet();
-};
-
-window.bjDeal=function(){
-  if(balance<bet){setMsg('Not enough balance!');return;}
-  if(deck.length<15)buildDeck();
-  balance-=bet; updateBalance();
-  playerHand=[deal(),deal()];
-  dealerHand=[deal(),deal()];
-  gameOver=false;
-  renderHands(true);
-  setMsg('');
-  // check natural blackjack
-  if(handVal(playerHand)===21){
-    endRound();
-    return;
+  function renderHands(hideDealer=true){
+    const pc=document.getElementById('bj-player-cards'),dc=document.getElementById('bj-dealer-cards');
+    pc.innerHTML='';dc.innerHTML='';
+    playerHand.forEach(c=>pc.appendChild(renderCard(c)));
+    dealerHand.forEach((c,i)=>dc.appendChild(renderCard(c,hideDealer&&i===1)));
+    document.getElementById('bj-player-val').textContent=`(${handVal(playerHand)})`;
+    document.getElementById('bj-dealer-val').textContent=hideDealer?'(?)': `(${handVal(dealerHand)})`;
   }
-  showActionControls();
-};
-
-window.bjHit=function(){
-  playerHand.push(deal());
-  renderHands(true);
-  if(handVal(playerHand)>21){endRound();}
-  else if(handVal(playerHand)===21){endRound();}
-  else{showActionControls();}
-};
-
-window.bjStand=function(){endRound();};
-
-window.bjDouble=function(){
-  if(balance<bet){setMsg('Not enough to double!');return;}
-  balance-=bet; bet*=2; updateBalance(); updateBet();
-  playerHand.push(deal());
-  renderHands(true);
-  endRound();
-};
-
-function endRound(){
-  gameOver=true;
-  // dealer draws
-  while(handVal(dealerHand)<17) dealerHand.push(deal());
-  renderHands(false);
-  const pv=handVal(playerHand),dv=handVal(dealerHand);
-  let msg='';
-  if(pv>21){msg='Bust! You lose.';}
-  else if(dv>21){balance+=bet*2;msg=`Dealer busts! +${bet}`;}
-  else if(pv===21&&playerHand.length===2&&!(dv===21&&dealerHand.length===2)){
-    const win=Math.floor(bet*2.5);balance+=win;msg=`Blackjack! +${win}`;
+  function setMsg(m){document.getElementById('bj-msg').textContent=m;}
+  function updateBalance(){document.getElementById('bj-balance').textContent=`$${balance}`;}
+  function updateBet(){document.getElementById('bj-bet').textContent=`$${bet}`;}
+  function showBetControls(){document.getElementById('bj-bet-controls').style.display='flex';document.getElementById('bj-action-controls').style.display='none';document.getElementById('bj-newgame-controls').style.display='none';}
+  function showActionControls(){document.getElementById('bj-bet-controls').style.display='none';document.getElementById('bj-action-controls').style.display='flex';document.getElementById('bj-newgame-controls').style.display='none';}
+  function showNewGame(){document.getElementById('bj-bet-controls').style.display='none';document.getElementById('bj-action-controls').style.display='none';document.getElementById('bj-newgame-controls').style.display='flex';}
+  window.bjChangeBet=function(n){if(!gameOver)return;bet=Math.max(5,Math.min(balance,bet+n));updateBet();};
+  window.bjDeal=function(){
+    if(balance<bet){setMsg('Not enough balance!');return;}
+    if(deck.length<15)buildDeck();
+    balance-=bet;updateBalance();playerHand=[deal(),deal()];dealerHand=[deal(),deal()];gameOver=false;
+    renderHands(true);setMsg('');
+    if(handVal(playerHand)===21){endRound();return;}
+    showActionControls();
+  };
+  window.bjHit=function(){playerHand.push(deal());renderHands(true);if(handVal(playerHand)>=21)endRound();else showActionControls();};
+  window.bjStand=function(){endRound();};
+  window.bjDouble=function(){if(balance<bet)return;balance-=bet;bet*=2;updateBalance();updateBet();playerHand.push(deal());renderHands(true);endRound();};
+  function endRound(){
+    gameOver=true;while(handVal(dealerHand)<17)dealerHand.push(deal());renderHands(false);
+    const pv=handVal(playerHand),dv=handVal(dealerHand);let msg='';
+    if(pv>21){msg='Bust! You lose.';}
+    else if(dv>21){balance+=bet*2;msg=`Dealer busts! +$${bet}`;}
+    else if(pv===21&&playerHand.length===2&&!(dv===21&&dealerHand.length===2)){const w=Math.floor(bet*2.5);balance+=w;msg=`Blackjack! +$${w}`;}
+    else if(pv>dv){balance+=bet*2;msg=`You win! +$${bet}`;}
+    else if(pv===dv){balance+=bet;msg='Push. Bet returned.';}
+    else{msg=`Dealer wins. -$${bet}`;}
+    updateBalance();setMsg(msg);
+    if(bet>balance)bet=Math.max(5,Math.floor(balance/5)*5);updateBet();
+    if(balance<5){setMsg(msg+' — Out of money!');setTimeout(()=>{balance=100;bet=5;updateBalance();updateBet();showBetControls();setMsg('$100 reloaded!');},2000);return;}
+    showNewGame();
   }
-  else if(pv>dv){balance+=bet*2;msg=`You win! +${bet}`;}
-  else if(pv===dv){balance+=bet;msg=`Push. Bet returned.`;}
-  else{msg=`Dealer wins. -${bet}`;}
-  updateBalance();
-  setMsg(msg);
-  // reset bet if too high
-  if(bet>balance)bet=Math.max(5,Math.floor(balance/5)*5);
-  updateBet();
-  if(balance<5){setMsg(msg+' — Out of money! Reloading...');setTimeout(()=>{balance=100;bet=5;updateBalance();updateBet();showBetControls();setMsg('New game — $100 loaded!');},2000);return;}
-  showNewGame();
-}
+  window.bjNewRound=function(){
+    bet=Math.min(bet,balance);updateBet();showBetControls();setMsg('');
+    document.getElementById('bj-player-cards').innerHTML='';document.getElementById('bj-dealer-cards').innerHTML='';
+    document.getElementById('bj-player-val').textContent='';document.getElementById('bj-dealer-val').textContent='';
+  };
+  buildDeck();
+})();
 
-window.bjNewRound=function(){bet=Math.min(bet,balance);updateBet();showBetControls();setMsg('');renderHands(false);document.getElementById('bj-player-cards').innerHTML='';document.getElementById('bj-dealer-cards').innerHTML='';document.getElementById('bj-player-val').textContent='';document.getElementById('bj-dealer-val').textContent='';};
-
-// add button styles
-const st=document.createElement('style');
-st.textContent=`.bj-btn{font-family:'VT323',monospace;font-size:16px;background:#c0c0c0;border-top:2px solid #fff;border-left:2px solid #fff;border-bottom:2px solid #555;border-right:2px solid #555;padding:2px 10px;cursor:pointer;color:#000;}.bj-btn:active{border-top:2px solid #555;border-left:2px solid #555;border-bottom:2px solid #fff;border-right:2px solid #fff;}.bj-btn:disabled{color:#888;cursor:default;}`;
-document.head.appendChild(st);
-
-buildDeck();
+// WINAMP VISUALIZER
+(function(){
+  function initVis(){
+    const cv=document.getElementById('winamp-vis');if(!cv)return;
+    const cx=cv.getContext('2d'),W=292,H=28,BARS=44,barW=4,gap=2;
+    const bars=Array.from({length:BARS},()=>({phase:Math.random()*Math.PI*2,speed:0.03+Math.random()*0.05,amp:0.4+Math.random()*0.5,peak:0,decay:0}));
+    let t=0;
+    function draw(){
+      cx.fillStyle='#c0c0c0';cx.fillRect(0,0,W,H);
+      for(let i=0;i<BARS;i++){
+        const b=bars[i];
+        const wave=Math.sin(t*b.speed+b.phase)*0.4+Math.sin(t*b.speed*1.9+b.phase*1.2)*0.35+Math.sin(t*0.02+i*0.35)*0.25;
+        const norm=(wave+1)/2;const h=Math.max(2,Math.floor(norm*b.amp*(H-4)));
+        if(h>b.peak){b.peak=h;b.decay=0;}else{b.decay+=0.12;b.peak=Math.max(0,b.peak-b.decay);}
+        const x=i*(barW+gap);const y=H-h-1;
+        cx.fillStyle='#000080';cx.fillRect(x,y,barW,h);
+        cx.fillStyle='#4444cc';cx.fillRect(x,y,barW,2);
+        if(b.peak>3){cx.fillStyle='#fff';cx.fillRect(x,H-Math.floor(b.peak)-2,barW,1);}
+      }
+      t++;requestAnimationFrame(draw);
+    }
+    draw();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initVis);
+  else initVis();
 })();
 </script>
 </body>
