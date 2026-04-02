@@ -269,7 +269,7 @@
   </div>
 </div>
 
-<div style="position:fixed; bottom:36px; right:4px; font-family:'VT323',monospace; font-size:11px; color:rgba(255,255,255,0.5); z-index:999; pointer-events:none;">v0.0.8.7</div>
+<div style="position:fixed; bottom:36px; right:4px; font-family:'VT323',monospace; font-size:11px; color:rgba(255,255,255,0.5); z-index:999; pointer-events:none;">v0.0.9.1</div>
 <div id="taskbar">
   <button id="start-btn">! Start</button>
   <div id="tb-site" class="taskbar-item" onclick="toggleWin('site-win')">! lampie.net</div>
@@ -280,6 +280,25 @@
 </div>
 
 <script>
+// MOBILE WINDOW FIX — override inline top/left/width on mobile
+function fixMobileWindows(){
+  if(window.innerWidth>600)return;
+  document.querySelectorAll('.win').forEach(w=>{
+    w.style.top='0px';
+    w.style.left='0px';
+    w.style.width='100vw';
+    w.style.maxWidth='100vw';
+    w.style.position='fixed';
+  });
+}
+const _origOpen=window.openWin;
+window.openWin=function(id){
+  if(typeof _origOpen==='function')_origOpen(id);
+  setTimeout(fixMobileWindows,10);
+};
+window.addEventListener('resize',fixMobileWindows);
+fixMobileWindows();
+
 // VISIT COUNTER
 
 function updateClock(){const n=new Date(),h=n.getHours(),m=n.getMinutes(),ap=h>=12?'PM':'AM',hh=h%12||12;document.getElementById('taskbar-clock').textContent=hh+':'+String(m).padStart(2,'0')+' '+ap;}
