@@ -688,37 +688,47 @@ loadMsgs();setInterval(loadMsgs,8000);
   buildDeck();
 })();
 
-// ── WEBAMP ─────────────────────────────────────────────────────
-let webampLoaded=false;
+// ── WEBAMP + MILKDROP ──────────────────────────────────────────
 let webampInstance=null;
-function launchWebamp(){
-  if(webampInstance){
-    // already open — just bring it to front
-    return;
-  }
-  if(!webampLoaded){
-    const s=document.createElement('script');
-    s.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
-    s.onload=function(){
-      webampLoaded=true;
-      _startWebamp();
-    };
-    document.head.appendChild(s);
-  } else {
-    _startWebamp();
-  }
-}
+
+window.launchWebamp=function(){
+  if(webampInstance)return;
+  if(typeof Webamp!=='undefined'){_startWebamp();return;}
+  const s=document.createElement('script');
+  // butterchurn bundle includes Milkdrop support
+  s.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
+  s.onload=_startWebamp;
+  s.onerror=function(){alert('Could not load Webamp.');};
+  document.head.appendChild(s);
+};
+
 function _startWebamp(){
-  webampInstance=new Webamp({
-    initialTracks:[{
-      metaData:{artist:'djbas',title:'17minutes'},
-      url:'17minutes.mp3'
-    }],
-    initialSkin:{url:'Fast.wsz'},
-    zIndex:500,
-  });
-  webampInstance.renderWhenReady(document.getElementById('winamp-container'));
-  webampInstance.onClose(()=>{ webampInstance=null; });
+  try{
+    webampInstance=new Webamp({
+      initialTracks:[{
+        metaData:{artist:'djbas',title:'17minutes'},
+        url:'17minutes.mp3'
+      }],
+      initialSkin:{url:'Fast.wsz'},
+      zIndex:500,
+      // open Milkdrop window automatically
+      windowLayout:{
+        main:{position:{top:0,left:0}},
+        equalizer:{position:{top:116,left:0}},
+        playlist:{position:{top:116,left:275},size:{extraHeight:4,extraWidth:0}},
+        milkdrop:{
+          position:{top:0,left:280},
+          size:{extraHeight:10,extraWidth:5},
+          closed:false
+        }
+      }
+    });
+    webampInstance.renderWhenReady(document.getElementById('winamp-container'));
+    webampInstance.onClose(function(){webampInstance=null;});
+  }catch(e){
+    console.error('Webamp error:',e);
+    webampInstance=null;
+  }
 }
 </script>
 </body>
