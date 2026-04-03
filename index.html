@@ -19,6 +19,8 @@
 body{width:100vw;height:100vh;font-family:'VT323',monospace;
   user-select:none;background:#008080;}
 #desktop{position:fixed;top:0;left:0;width:100vw;height:100vh;overflow:hidden;z-index:1;}
+/* Webamp renders to body above #desktop */
+#webamp{z-index:9999!important;}
 
 /* ── BEVEL HELPERS ───────────────────────────────────────────── */
 .raised{border:2px solid;border-color:#fff #555 #555 #fff;}
@@ -395,8 +397,10 @@ body.is-mobile .addrbar{font-size:18px;}
   </div>
 </div>
 
-<!-- WINAMP — launches directly, no wrapper window -->
-<div id="winamp-container"></div>
+<!-- WINAMP — Songs I Like -->
+<div class="win" id="songs-win" style="display:none;">
+  <div id="winamp-container"></div>
+</div>
 
 <!-- MIXES FOLDER -->
 <div class="win" id="mixes-win" style="top:420px;left:500px;width:340px;">
@@ -501,6 +505,7 @@ body.is-mobile .addrbar{font-size:18px;}
 <div id="taskbar">
   <button id="start-btn">! Start</button>
   <div id="tb-site"      class="tb-item" onclick="toggleWin('site-win')">! lampie.net</div>
+  <div id="tb-songs" class="tb-item" onclick="toggleWin('songs-win')">♪ Winamp</div>
   <div id="tb-blackjack" class="tb-item" onclick="toggleWin('blackjack-win')">♠ Blackjack</div>
   <div id="tb-songs"     class="tb-item" onclick="toggleWin('songs-win')">♪ Songs</div>
   <div id="tb-mixes"     class="tb-item" onclick="toggleWin('mixes-win')">▣ Mixes</div>
@@ -533,7 +538,7 @@ tick();setInterval(tick,10000);
 
 // ── WINDOW MANAGEMENT ──────────────────────────────────────────
 const TB_MAP={
-  'site-win':'tb-site','blackjack-win':'tb-blackjack',
+  'site-win':'tb-site','blackjack-win':'tb-blackjack','songs-win':'tb-songs',
   'mixes-win':'tb-mixes','mix1-win':'tb-mix1','readme-win':'tb-readme',
   'youtube-win':'tb-youtube','spotify-win':'tb-spotify'
 };
@@ -696,7 +701,6 @@ loadMsgs();setInterval(loadMsgs,8000);
 
 // ── WEBAMP ─────────────────────────────────────────────────────
 let webampInstance = null;
-
 window.launchWebamp = function() {
   if (webampInstance) return;
   if (typeof Webamp !== 'undefined') { _startWebamp(); return; }
@@ -705,16 +709,11 @@ window.launchWebamp = function() {
   s.onload = _startWebamp;
   document.head.appendChild(s);
 };
-
 function _startWebamp() {
   webampInstance = new Webamp({
-    initialTracks: [{
-      metaData: { artist: 'djbas', title: '17minutes' },
-      url: 'https://lampie.net/17minutes.mp3'
-    }],
-    zIndex: 99999,
+    initialTracks: [{ metaData: { artist: 'djbas', title: '17minutes' }, url: 'https://lampie.net/17minutes.mp3' }],
+    zIndex: 9999,
   });
-  // render to body so it floats above everything
   webampInstance.renderWhenReady(document.body);
   webampInstance.onClose(function() { webampInstance = null; });
 }
