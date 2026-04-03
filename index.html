@@ -391,25 +391,26 @@ body.is-mobile .addrbar{font-size:18px;}
   </div>
 </div>
 
-<!-- SONGS I LIKE -->
+<!-- SONGS I LIKE — Webamp -->
 <div class="win" id="songs-win" style="top:420px;left:730px;width:340px;">
   <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
     <span class="titlebar-icon">♪</span>
-    <div class="titlebar-title">Lampie Music Player</div>
+    <div class="titlebar-title">Songs I Like</div>
     <div class="win-btns">
       <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
       <div class="win-btn">□</div>
       <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
     </div>
   </div>
-  <div class="player-bar"><span>Lampie Music Player</span><span>&#9835;</span></div>
-  <div style="background:#c0c0c0;height:30px;padding:2px 4px;">
-    <canvas id="winamp-vis" width="332" height="26"
-      style="display:block;border-top:1px solid #555;border-left:1px solid #555;border-bottom:1px solid #fff;border-right:1px solid #fff;"></canvas>
+  <div style="background:#c0c0c0;padding:4px 8px;font-family:'VT323',monospace;font-size:12px;border-bottom:1px solid #888;color:#555;">
+    Double-click icon to open player. Skin switcher below.
   </div>
-  <iframe id="sc-player" width="340" height="280" scrolling="no" frameborder="no" allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lamp-ie/sets/songs-i-like&color=%23000080&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=false">
-  </iframe>
+  <div style="background:#c0c0c0;padding:6px 8px;display:flex;gap:6px;align-items:center;">
+    <button class="nav-btn" onclick="loadSkin(0)" style="font-family:'VT323',monospace;font-size:13px;padding:3px 8px;">F&F Skin</button>
+    <button class="nav-btn" onclick="loadSkin(1)" style="font-family:'VT323',monospace;font-size:13px;padding:3px 8px;">Alien Skin</button>
+    <button class="nav-btn" onclick="launchWebamp()" style="font-family:'VT323',monospace;font-size:13px;padding:3px 8px;background:#000080;color:#fff;border-color:#fff #555 #555 #fff;">▶ Launch</button>
+  </div>
+  <div id="webamp-container" style="background:#000;min-height:80px;position:relative;"></div>
 </div>
 
 <!-- MIXES FOLDER -->
@@ -706,32 +707,38 @@ loadMsgs();setInterval(loadMsgs,8000);
   buildDeck();
 })();
 
-// ── WINAMP VISUALISER ──────────────────────────────────────────
-(function(){
-  function init(){
-    const cv=document.getElementById('winamp-vis');if(!cv)return;
-    const cx=cv.getContext('2d'),W=332,H=26,BARS=44,bW=4,gap=2;
-    const bars=Array.from({length:BARS},()=>({ph:Math.random()*Math.PI*2,sp:0.03+Math.random()*0.05,am:0.4+Math.random()*0.5,pk:0,dc:0}));
-    let t=0;
-    function draw(){
-      cx.fillStyle='#c0c0c0';cx.fillRect(0,0,W,H);
-      for(let i=0;i<BARS;i++){
-        const b=bars[i];
-        const w=Math.sin(t*b.sp+b.ph)*0.4+Math.sin(t*b.sp*1.9+b.ph*1.2)*0.35+Math.sin(t*0.02+i*0.35)*0.25;
-        const h=Math.max(2,Math.floor(((w+1)/2)*b.am*(H-4)));
-        if(h>b.pk){b.pk=h;b.dc=0;}else{b.dc+=0.12;b.pk=Math.max(0,b.pk-b.dc);}
-        const x=i*(bW+gap),y=H-h-1;
-        cx.fillStyle='#000080';cx.fillRect(x,y,bW,h);
-        cx.fillStyle='#4444aa';cx.fillRect(x,y,bW,2);
-        if(b.pk>3){cx.fillStyle='#fff';cx.fillRect(x,H-Math.floor(b.pk)-2,bW,1);}
-      }
-      t++;requestAnimationFrame(draw);
-    }
-    draw();
+// ── WEBAMP ─────────────────────────────────────────────────────
+const SKINS = [
+  'The_Fast_And_The_Furious_Skinzz.wsz',
+  'New_Idea_3__Alien_Metalloid_.wsz'
+];
+const TRACKS = [
+  { metaData: { artist: 'djbas', title: '17minutes' }, url: '17minutes.mp3' }
+];
+let webampInstance = null;
+let currentSkin = 0;
+
+function loadSkin(idx) {
+  currentSkin = idx;
+  if (webampInstance) {
+    webampInstance.setSkinFromUrl(SKINS[idx]);
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
-  else init();
-})();
+}
+
+function launchWebamp() {
+  // Only load once
+  if (webampInstance) return;
+  const container = document.getElementById('webamp-container');
+  webampInstance = new Webamp({
+    initialTracks: TRACKS,
+    initialSkin: { url: SKINS[currentSkin] },
+    zIndex: 9000,
+  });
+  webampInstance.renderWhenReady(container);
+}
+
+// ── WINAMP VISUALISER (removed — using Webamp now) ────────────
 </script>
+<script src="https://unpkg.com/webamp@1.4.2/built/webamp.bundle.min.js"></script>
 </body>
 </html>
