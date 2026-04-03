@@ -204,12 +204,29 @@ body.is-mobile .tb-item{font-size:17px;padding:4px 10px;}
 body.is-mobile #taskbar-clock{font-size:19px;padding:4px 12px;}
 
 /* Icons 2x on mobile */
-body.is-mobile .di-box{width:144px;height:144px;font-size:64px;}
-body.is-mobile .di{width:160px;}
-body.is-mobile .di-label{font-size:18px;}
+body.is-mobile .di-box{width:180px;height:180px;font-size:80px;}
+body.is-mobile .di{width:200px;}
+body.is-mobile .di-label{font-size:22px;}
+
+/* Taskbar bigger on mobile */
+body.is-mobile #taskbar{height:72px;}
+body.is-mobile #start-btn{font-size:28px;padding:8px 18px;}
+body.is-mobile .tb-item{font-size:22px;padding:6px 14px;}
+body.is-mobile #taskbar-clock{font-size:24px;padding:6px 14px;}
+
+/* Chat bigger on mobile */
+body.is-mobile .chat-msgs{height:260px;font-size:20px;}
+body.is-mobile .chat-msg .nm{font-size:20px;}
+body.is-mobile .chat-msg .tm{font-size:16px;}
+body.is-mobile .chat-msg .tx{font-size:18px;}
+body.is-mobile .chat-in input,body.is-mobile .chat-in textarea{font-size:20px;padding:4px 8px;}
+body.is-mobile .chat-btn{font-size:22px;padding:4px 18px;}
+body.is-mobile .chat-title{font-size:20px;padding:4px 10px;}
+body.is-mobile .chat-empty{font-size:18px;}
+body.is-mobile .chat-note{font-size:14px;}
 
 /* Reminder 300% on mobile */
-body.is-mobile #show-bubble{font-size:28px;max-width:380px;padding:12px 16px 20px;line-height:1.6;border-width:3px;bottom:70px;right:10px;}
+body.is-mobile #show-bubble{font-size:28px;max-width:380px;padding:12px 16px 20px;line-height:1.6;border-width:3px;bottom:80px;right:10px;}
 body.is-mobile #show-bubble b{font-size:30px;}
 body.is-mobile #show-bubble-close{font-size:20px;}
 body.is-mobile #show-bubble::after{border-left-width:12px;border-right-width:12px;border-top-width:14px;bottom:-14px;}
@@ -246,7 +263,7 @@ body.is-mobile .addrbar{font-size:18px;}
 </div>
 
 <!-- VERSION -->
-<div id="ver">v0.1.1</div>
+<div id="ver">v0.1.2a</div>
 
 <!-- ── COLUMN 1: MAIN ICONS ──────────────────────────────────── -->
 <div class="di" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
@@ -260,40 +277,6 @@ body.is-mobile .addrbar{font-size:18px;}
 <div class="di" style="top:264px;left:16px;" ondblclick="openWin('songs-win')">
   <div class="di-box" style="font-size:36px;color:#000080;">♪</div>
   <span class="di-label">Songs I Like</span>
-</div>
-<div class="di" style="top:388px;left:16px;" ondblclick="openWin('mixes-win')">
-  <div class="di-box" style="font-size:28px;color:#e8a000;">📁</div>
-  <span class="di-label">Mixes</span>
-</div>
-<div class="di" style="top:512px;left:16px;" ondblclick="openWin('readme-win')">
-  <div class="di-box" style="font-size:22px;color:#000080;">📄</div>
-  <span class="di-label">readme.txt</span>
-</div>
-
-<!-- ── COLUMN 2: SOCIAL ICONS ────────────────────────────────── -->
-<div class="di" style="top:16px;left:150px;" ondblclick="openLink('http://instagram.com/jaaicob')">
-  <div class="di-box" style="font-size:26px;color:#c13584;">ig</div>
-  <span class="di-label">Instagram</span>
-</div>
-<div class="di" style="top:140px;left:150px;" ondblclick="openLink('https://www.tiktok.com/@asiangarbage')">
-  <div class="di-box" style="font-size:20px;color:#000;">tiktok</div>
-  <span class="di-label">TikTok</span>
-</div>
-<div class="di" style="top:264px;left:150px;" ondblclick="openLink('https://soundcloud.com/lamp-ie')">
-  <div class="di-box" style="font-size:26px;color:#ff5500;">sc</div>
-  <span class="di-label">Soundcloud</span>
-</div>
-<div class="di" style="top:388px;left:150px;" ondblclick="openLink('https://www.twitch.tv/worldsbestfoodie')">
-  <div class="di-box" style="font-size:26px;color:#6441a5;">tv</div>
-  <span class="di-label">Twitch</span>
-</div>
-<div class="di" style="top:512px;left:150px;" ondblclick="openWin('youtube-win')">
-  <div class="di-box" style="font-size:26px;color:#ff0000;">yt</div>
-  <span class="di-label">YouTube</span>
-</div>
-<div class="di" style="top:636px;left:150px;" ondblclick="openWin('spotify-win')">
-  <div class="di-box" style="font-size:26px;color:#1db954;">sp</div>
-  <span class="di-label">Spotify</span>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
