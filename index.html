@@ -274,9 +274,9 @@ body.is-mobile .addrbar{font-size:18px;}
   <div class="di-box" style="font-size:36px;color:#000080;">♠</div>
   <span class="di-label">Blackjack.exe</span>
 </div>
-<div class="di" style="top:264px;left:16px;" ondblclick="openWin('songs-win')">
+<div class="di" style="top:264px;left:16px;" ondblclick="launchWebamp()">
   <div class="di-box" style="font-size:36px;color:#000080;">♪</div>
-  <span class="di-label">Songs I Like</span>
+  <span class="di-label">Winamp</span>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -391,24 +391,8 @@ body.is-mobile .addrbar{font-size:18px;}
   </div>
 </div>
 
-<!-- WINAMP -->
-<div class="win" id="songs-win" style="top:420px;left:730px;width:280px;">
-  <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
-    <span class="titlebar-icon">♪</span>
-    <div class="titlebar-title">Winamp</div>
-    <div class="win-btns">
-      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
-      <div class="win-btn">□</div>
-      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
-    </div>
-  </div>
-  <div id="winamp-skinbar" style="background:#c0c0c0;border-bottom:1px solid #888;padding:3px 6px;display:flex;gap:6px;font-family:'VT323',monospace;font-size:13px;">
-    <span style="color:#555;">Skin:</span>
-    <span data-skin="Fast.wsz" style="cursor:pointer;color:#000080;font-weight:bold;text-decoration:underline;">Fast</span>
-    <span data-skin="Alien.wsz" style="cursor:pointer;color:#000080;text-decoration:underline;">Alien</span>
-  </div>
-  <div id="winamp-container" style="width:100%;min-height:116px;position:relative;overflow:hidden;"></div>
-</div>
+<!-- WINAMP — launches directly, no wrapper window -->
+<div id="winamp-container"></div>
 
 <!-- MIXES FOLDER -->
 <div class="win" id="mixes-win" style="top:420px;left:500px;width:340px;">
@@ -543,7 +527,7 @@ tick();setInterval(tick,10000);
 
 // ── WINDOW MANAGEMENT ──────────────────────────────────────────
 const TB_MAP={
-  'site-win':'tb-site','blackjack-win':'tb-blackjack','songs-win':'tb-songs',
+  'site-win':'tb-site','blackjack-win':'tb-blackjack',
   'mixes-win':'tb-mixes','mix1-win':'tb-mix1','readme-win':'tb-readme',
   'youtube-win':'tb-youtube','spotify-win':'tb-spotify'
 };
@@ -705,48 +689,37 @@ loadMsgs();setInterval(loadMsgs,8000);
 })();
 
 // ── WEBAMP ─────────────────────────────────────────────────────
-(function(){
-  const script=document.createElement('script');
-  script.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
-  script.onload=function(){
-    let currentSkin='Fast.wsz';
-    let webamp=null;
-
-    function launchWebamp(skin){
-      // destroy previous instance if exists
-      if(webamp){try{webamp.dispose();}catch(e){}}
-      const container=document.getElementById('winamp-container');
-      container.innerHTML='';
-      webamp=new Webamp({
-        initialTracks:[{
-          metaData:{artist:'djbas',title:'17minutes'},
-          url:'17minutes.mp3'
-        }],
-        initialSkin:{url:skin},
-        zIndex:150,
-      });
-      webamp.renderWhenReady(container);
-      // double size — Webamp exposes this via options
-      webamp.__browserWindow&&webamp.__browserWindow.setDoubleSize&&webamp.__browserWindow.setDoubleSize(true);
-    }
-
-    // skin switcher buttons
-    const bar=document.getElementById('winamp-skinbar');
-    if(bar){
-      bar.addEventListener('click',function(e){
-        const btn=e.target.closest('[data-skin]');
-        if(!btn)return;
-        currentSkin=btn.dataset.skin;
-        bar.querySelectorAll('[data-skin]').forEach(b=>b.style.fontWeight='normal');
-        btn.style.fontWeight='bold';
-        launchWebamp(currentSkin);
-      });
-    }
-
-    launchWebamp(currentSkin);
-  };
-  document.head.appendChild(script);
-})();
+let webampLoaded=false;
+let webampInstance=null;
+function launchWebamp(){
+  if(webampInstance){
+    // already open — just bring it to front
+    return;
+  }
+  if(!webampLoaded){
+    const s=document.createElement('script');
+    s.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
+    s.onload=function(){
+      webampLoaded=true;
+      _startWebamp();
+    };
+    document.head.appendChild(s);
+  } else {
+    _startWebamp();
+  }
+}
+function _startWebamp(){
+  webampInstance=new Webamp({
+    initialTracks:[{
+      metaData:{artist:'djbas',title:'17minutes'},
+      url:'17minutes.mp3'
+    }],
+    initialSkin:{url:'Fast.wsz'},
+    zIndex:500,
+  });
+  webampInstance.renderWhenReady(document.getElementById('winamp-container'));
+  webampInstance.onClose(()=>{ webampInstance=null; });
+}
 </script>
 </body>
 </html>
