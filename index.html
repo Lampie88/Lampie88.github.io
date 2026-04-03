@@ -16,11 +16,8 @@
    text:    #000000
    ──────────────────────────────────────────────────────────── */
 
-body{width:100vw;height:100vh;font-family:'VT323',monospace;
+body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
   user-select:none;background:#008080;}
-#desktop{position:fixed;top:0;left:0;width:100vw;height:100vh;overflow:hidden;z-index:1;}
-/* Webamp renders to body above #desktop */
-#webamp{z-index:9999!important;}
 
 /* ── BEVEL HELPERS ───────────────────────────────────────────── */
 .raised{border:2px solid;border-color:#fff #555 #555 #fff;}
@@ -234,7 +231,7 @@ body.is-mobile #show-bubble b{font-size:30px;}
 body.is-mobile #show-bubble-close{font-size:20px;}
 body.is-mobile #show-bubble::after{border-left-width:12px;border-right-width:12px;border-top-width:14px;bottom:-14px;}
 
-body.is-mobile #desktop{overflow:hidden;}
+/* Windows bigger on mobile */
 body.is-mobile .win{font-size:120%;}
 body.is-mobile .titlebar-title{font-size:20px;}
 body.is-mobile .win-btn{width:28px;height:24px;font-size:16px;}
@@ -257,9 +254,6 @@ body.is-mobile .addrbar{font-size:18px;}
 </head>
 <body>
 
-<!-- DESKTOP WRAPPER -->
-<div id="desktop">
-
 <!-- SHOW REMINDER -->
 <div id="show-bubble">
   <span id="show-bubble-close" onclick="document.getElementById('show-bubble').style.display='none'">✕</span>
@@ -280,9 +274,9 @@ body.is-mobile .addrbar{font-size:18px;}
   <div class="di-box" style="font-size:36px;color:#000080;">♠</div>
   <span class="di-label">Blackjack.exe</span>
 </div>
-<div class="di" style="top:264px;left:16px;" ondblclick="launchWebamp()">
+<div class="di" style="top:264px;left:16px;" ondblclick="openWin('songs-win')">
   <div class="di-box" style="font-size:36px;color:#000080;">♪</div>
-  <span class="di-label">Winamp</span>
+  <span class="di-label">Songs I Like</span>
 </div>
 
 <!-- ══════════════════════════════════════════════════════════════
@@ -397,9 +391,18 @@ body.is-mobile .addrbar{font-size:18px;}
   </div>
 </div>
 
-<!-- WINAMP — Songs I Like -->
-<div class="win" id="songs-win" style="display:none;">
-  <div id="winamp-container"></div>
+<!-- WINAMP -->
+<div class="win" id="songs-win" style="top:420px;left:730px;width:340px;">
+  <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
+    <span class="titlebar-icon">♪</span>
+    <div class="titlebar-title">Winamp</div>
+    <div class="win-btns">
+      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
+      <div class="win-btn">□</div>
+      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
+    </div>
+  </div>
+  <div id="winamp-container" style="width:100%;background:#000;"></div>
 </div>
 
 <!-- MIXES FOLDER -->
@@ -505,7 +508,6 @@ body.is-mobile .addrbar{font-size:18px;}
 <div id="taskbar">
   <button id="start-btn">! Start</button>
   <div id="tb-site"      class="tb-item" onclick="toggleWin('site-win')">! lampie.net</div>
-  <div id="tb-songs" class="tb-item" onclick="toggleWin('songs-win')">♪ Winamp</div>
   <div id="tb-blackjack" class="tb-item" onclick="toggleWin('blackjack-win')">♠ Blackjack</div>
   <div id="tb-songs"     class="tb-item" onclick="toggleWin('songs-win')">♪ Songs</div>
   <div id="tb-mixes"     class="tb-item" onclick="toggleWin('mixes-win')">▣ Mixes</div>
@@ -514,9 +516,7 @@ body.is-mobile .addrbar{font-size:18px;}
   <div id="tb-youtube"   class="tb-item" onclick="toggleWin('youtube-win')">yt YouTube</div>
   <div id="tb-spotify"   class="tb-item" onclick="toggleWin('spotify-win')">sp Spotify</div>
   <div id="taskbar-clock"></div>
-</div><!-- end #taskbar -->
-
-</div><!-- end #desktop -->
+</div>
 
 <script>
 // ── MOBILE DETECTION ───────────────────────────────────────────
@@ -700,23 +700,36 @@ loadMsgs();setInterval(loadMsgs,8000);
 })();
 
 // ── WEBAMP ─────────────────────────────────────────────────────
-let webampInstance = null;
-window.launchWebamp = function() {
-  if (webampInstance) return;
-  if (typeof Webamp !== 'undefined') { _startWebamp(); return; }
-  const s = document.createElement('script');
-  s.src = 'https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
-  s.onload = _startWebamp;
-  document.head.appendChild(s);
-};
-function _startWebamp() {
-  webampInstance = new Webamp({
-    initialTracks: [{ metaData: { artist: 'djbas', title: '17minutes' }, url: 'https://lampie.net/17minutes.mp3' }],
-    zIndex: 9999,
-  });
-  webampInstance.renderWhenReady(document.body);
-  webampInstance.onClose(function() { webampInstance = null; });
-}
+(function(){
+  const script=document.createElement('script');
+  script.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
+  script.onload=function(){
+    const webamp=new Webamp({
+      initialTracks:[
+        {
+          metaData:{artist:'djbas',title:'17minutes'},
+          url:'17minutes.mp3'
+        }
+      ],
+      // swap skin1.wsz for your actual skin filename
+      initialSkin:{url:'skin1.wsz'},
+      // double size by default
+      __butterchurnOptions:{},
+    });
+    // render into our container div
+    const container=document.getElementById('winamp-container');
+    webamp.renderWhenReady(container);
+    // set double size after render
+    webamp.onTrackDidChange(()=>{});
+    // Webamp renders itself as a floating window so
+    // hide our win95 wrapper titlebar chrome — Webamp has its own
+    document.getElementById('songs-win').style.background='transparent';
+    document.getElementById('songs-win').style.border='none';
+    document.getElementById('songs-win').querySelector('.titlebar').style.display='none';
+    document.getElementById('songs-win').querySelector('.win-btns').style.display='none';
+  };
+  document.head.appendChild(script);
+})();
 </script>
 </body>
 </html>
