@@ -184,6 +184,7 @@ body::after{
 #site h1{font-size:44px;color:#000;margin:0;}
 #site h2{color:#000;margin:0 0 5px;}
 #site hr{border-top:1px solid #555;border-bottom:1px solid #fff;margin:8px 0;}
+#site p{line-height:1.25;}
 
 .marquee-wrap{background:#000080;color:#fff;padding:2px 0;font-size:14px;
   display:block;margin-bottom:8px;overflow:hidden;white-space:nowrap;width:100%;}
@@ -329,7 +330,29 @@ body.is-mobile .win-btn{width:28px;height:24px;font-size:16px;}
 body.is-mobile .menubar{font-size:18px;}
 body.is-mobile .addrbar{font-size:18px;}
 body.is-mobile .win-body{min-height:calc(100vh - 220px);}
-
+body.is-mobile #blackjack-win{
+  width:calc(100vw - 48px) !important;
+  max-width:440px !important;
+  left:24px !important;
+}
+body.is-mobile #bj-wrap{font-size:20px;padding:12px;}
+body.is-mobile .bj-btn{font-size:18px;padding:6px 12px;}
+body.is-mobile #bj-bet-ctrl,
+body.is-mobile #bj-act-ctrl,
+body.is-mobile #bj-new-ctrl{flex-wrap:wrap;gap:8px;}
+body.is-mobile #bj-dealer-cards,
+body.is-mobile #bj-player-cards{min-height:84px !important;gap:6px !important;}
+body.is-mobile #site{padding:14px 16px 20px;font-size:24px;}
+body.is-mobile #site h1{font-size:56px;line-height:.95;margin-bottom:8px;}
+body.is-mobile #site h2{font-size:28px;margin-bottom:8px;}
+body.is-mobile #site hr{margin:12px 0;}
+body.is-mobile .marquee-wrap{font-size:18px;margin-bottom:12px;padding:4px 0;}
+body.is-mobile .layout{flex-direction:column;gap:16px;}
+body.is-mobile .left,
+body.is-mobile .right{width:100%;}
+body.is-mobile .right{order:-1;}
+body.is-mobile .social-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:10px 12px;font-size:24px;}
+body.is-mobile .chat-board{padding:8px;}
 
 /* ── MOBILE ──────────────────────────────────────────────────── */
 @media(max-width:600px){
@@ -351,6 +374,24 @@ body.is-mobile .win-body{min-height:calc(100vh - 220px);}
     max-height:calc(100vh - 84px);
   }
   .win-body{min-height:calc(100vh - 190px);}
+  #blackjack-win{
+    width:calc(100vw - 28px) !important;
+    max-width:calc(100vw - 28px) !important;
+    left:14px !important;
+  }
+  #bj-wrap{font-size:16px;padding:10px;}
+  .bj-btn{font-size:15px;padding:4px 10px;}
+  #bj-bet-ctrl,
+  #bj-act-ctrl,
+  #bj-new-ctrl{flex-wrap:wrap;gap:6px;}
+  #site{padding:12px 12px 18px;font-size:17px;}
+  #site h1{font-size:38px;line-height:1;}
+  #site h2{font-size:20px;}
+  .marquee-wrap{font-size:13px;margin-bottom:10px;}
+  .layout{flex-direction:column;gap:12px;}
+  .left,.right{width:100%;}
+  .right{order:-1;}
+  .social-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:8px 10px;font-size:17px;}
   body::before{background-size:100% clamp(2px, 0.6vw, 4px), 100% 100%;}
   body::after{opacity:.24;}
 }
@@ -370,13 +411,13 @@ body.is-mobile .win-body{min-height:calc(100vh - 220px);}
 <div id="ver">v0.1.2a</div>
 
 <!-- ── COLUMN 1: MAIN ICONS ──────────────────────────────────── -->
-<div class="di" id="icon-site" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
+<div class="di" id="icon-site" style="top:16px;left:16px;" onclick="openWin('site-win')">
   <div class="di-box">
     <img src="./lampie.png" alt="" class="desktop-icon-img">
   </div>
   <span class="di-label">lampie.net</span>
 </div>
-<div class="di" id="icon-blackjack" style="top:140px;left:16px;" ondblclick="openWin('blackjack-win')">
+<div class="di" id="icon-blackjack" style="top:140px;left:16px;" onclick="openWin('blackjack-win')">
   <div class="di-box">
     <img src="./blackjack.png" alt="" class="desktop-icon-img">
   </div>
