@@ -287,8 +287,10 @@ body.is-mobile #taskbar-clock{font-size:19px;padding:4px 12px;}
 
 /* Icons 2x on mobile */
 body.is-mobile .di-box{width:180px;height:180px;font-size:80px;}
-body.is-mobile .di{width:200px;}
+body.is-mobile .di{width:220px;padding:8px 0;}
 body.is-mobile .di-label{font-size:22px;}
+body.is-mobile #icon-site{top:18px !important;left:10px !important;}
+body.is-mobile #icon-blackjack{top:240px !important;left:10px !important;}
 
 /* Taskbar bigger on mobile */
 body.is-mobile #taskbar{height:72px;}
@@ -314,11 +316,19 @@ body.is-mobile #show-bubble-close{font-size:20px;}
 body.is-mobile #show-bubble::after{border-left-width:12px;border-right-width:12px;border-top-width:14px;bottom:-14px;}
 
 /* Windows bigger on mobile */
-body.is-mobile .win{font-size:120%;}
+body.is-mobile .win{
+  font-size:120%;
+  width:calc(100vw - 24px) !important;
+  max-width:calc(100vw - 24px) !important;
+  left:12px !important;
+  top:12px !important;
+  max-height:calc(100vh - 96px);
+}
 body.is-mobile .titlebar-title{font-size:20px;}
 body.is-mobile .win-btn{width:28px;height:24px;font-size:16px;}
 body.is-mobile .menubar{font-size:18px;}
 body.is-mobile .addrbar{font-size:18px;}
+body.is-mobile .win-body{min-height:calc(100vh - 220px);}
 
 
 /* ── MOBILE ──────────────────────────────────────────────────── */
@@ -328,9 +338,19 @@ body.is-mobile .addrbar{font-size:18px;}
   .tb-item{font-size:17px;padding:4px 10px;}
   #taskbar-clock{font-size:19px;padding:4px 12px;}
   .di-box{width:100px;height:100px;font-size:40px;}
-  .di{width:120px;}
+  .di{width:140px;padding:6px 0;}
   .di-label{font-size:14px;}
   #show-bubble{font-size:13px;max-width:200px;bottom:66px;}
+  #icon-site{top:14px !important;left:8px !important;}
+  #icon-blackjack{top:132px !important;left:8px !important;}
+  .win{
+    width:calc(100vw - 16px) !important;
+    max-width:calc(100vw - 16px) !important;
+    left:8px !important;
+    top:8px !important;
+    max-height:calc(100vh - 84px);
+  }
+  .win-body{min-height:calc(100vh - 190px);}
   body::before{background-size:100% clamp(2px, 0.6vw, 4px), 100% 100%;}
   body::after{opacity:.24;}
 }
@@ -350,13 +370,13 @@ body.is-mobile .addrbar{font-size:18px;}
 <div id="ver">v0.1.2a</div>
 
 <!-- ── COLUMN 1: MAIN ICONS ──────────────────────────────────── -->
-<div class="di" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
+<div class="di" id="icon-site" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
   <div class="di-box">
     <img src="./lampie.png" alt="" class="desktop-icon-img">
   </div>
   <span class="di-label">lampie.net</span>
 </div>
-<div class="di" style="top:140px;left:16px;" ondblclick="openWin('blackjack-win')">
+<div class="di" id="icon-blackjack" style="top:140px;left:16px;" ondblclick="openWin('blackjack-win')">
   <div class="di-box">
     <img src="./blackjack.png" alt="" class="desktop-icon-img">
   </div>
