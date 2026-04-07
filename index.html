@@ -17,7 +17,82 @@
    ──────────────────────────────────────────────────────────── */
 
 body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
-  user-select:none;background:#008080;}
+  user-select:none;background:#008080;position:relative;
+  filter:contrast(1.04) saturate(0.94) brightness(0.97);}
+
+body::before,
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+
+body::before{
+  z-index:10000;
+  opacity:.52;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.03) 0 1px,
+      rgba(0,0,0,0.18) 1px 3px,
+      rgba(0,0,0,0.02) 3px 4px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.08) 0,
+      rgba(255,255,255,0.02) 48%,
+      rgba(0,0,0,0.18) 50%,
+      rgba(0,0,0,0.06) 100%
+    );
+  background-size:100% clamp(3px, 0.42vw, 6px), 100% 100%;
+  background-position:0 0, 0 0;
+  mix-blend-mode:multiply;
+  animation:scan-drift 8s linear infinite;
+}
+
+body::after{
+  z-index:10001;
+  opacity:.3;
+  background:
+    radial-gradient(ellipse at center, transparent 52%, rgba(0,0,0,0.3) 100%),
+    linear-gradient(90deg, rgba(255,0,0,0.05), rgba(0,255,255,0.02) 48%, rgba(0,0,255,0.05)),
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,0) 0%,
+      rgba(255,255,255,0.06) 48%,
+      rgba(255,255,255,0.14) 50%,
+      rgba(255,255,255,0.04) 52%,
+      rgba(255,255,255,0) 100%
+    );
+  background-size:100% 100%, 100% 100%, 100% 18%;
+  background-repeat:no-repeat, no-repeat, no-repeat;
+  animation:crt-flicker 0.14s steps(2, end) infinite, screen-distort 6s ease-in-out infinite;
+}
+
+@keyframes crt-flicker{
+  0%{opacity:.24;}
+  50%{opacity:.3;}
+  100%{opacity:.27;}
+}
+
+@keyframes scan-drift{
+  0%{background-position:0 0, 0 0;}
+  100%{background-position:0 14px, 0 0;}
+}
+
+@keyframes screen-distort{
+  0%,100%{transform:scale(1,1) skewX(0deg);}
+  8%{transform:scale(1.001,0.998) skewX(0.15deg);}
+  9%{transform:scale(0.999,1.002) skewX(-0.2deg);}
+  10%{transform:scale(1,1) skewX(0deg);}
+  42%{transform:scale(1,1) translateY(0);}
+  44%{transform:scale(1.002,0.996) translateY(-0.35vh);}
+  46%{transform:scale(0.999,1.003) translateY(0.2vh);}
+  48%{transform:scale(1,1) translateY(0);}
+  78%{transform:scale(1.001,0.999) skewX(0.12deg);}
+  80%{transform:scale(1,1) skewX(0deg);}
+}
 
 /* ── BEVEL HELPERS ───────────────────────────────────────────── */
 .raised{border:2px solid;border-color:#fff #555 #555 #fff;}
@@ -51,6 +126,12 @@ body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
   font-family:'VT323',monospace;font-weight:bold;
   margin:0 auto 4px;
   line-height:1;
+}
+.desktop-icon-img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
 }
 @media(min-width:601px){
   .di-box{width:96px;height:96px;}
@@ -249,6 +330,8 @@ body.is-mobile .addrbar{font-size:18px;}
   .di{width:120px;}
   .di-label{font-size:14px;}
   #show-bubble{font-size:13px;max-width:200px;bottom:66px;}
+  body::before{background-size:100% clamp(2px, 0.6vw, 4px), 100% 100%;}
+  body::after{opacity:.24;}
 }
 </style>
 </head>
@@ -267,18 +350,17 @@ body.is-mobile .addrbar{font-size:18px;}
 
 <!-- ── COLUMN 1: MAIN ICONS ──────────────────────────────────── -->
 <div class="di" style="top:16px;left:16px;" ondblclick="openWin('site-win')">
-  <div class="di-box" style="font-size:36px;color:#000080;">!</div>
+  <div class="di-box">
+    <img src="github/lampie.png" alt="lampie.net icon" class="desktop-icon-img">
+  </div>
   <span class="di-label">lampie.net</span>
 </div>
 <div class="di" style="top:140px;left:16px;" ondblclick="openWin('blackjack-win')">
-  <div class="di-box" style="font-size:36px;color:#000080;">♠</div>
+  <div class="di-box">
+    <img src="github/blackjack.png" alt="Blackjack icon" class="desktop-icon-img">
+  </div>
   <span class="di-label">Blackjack.exe</span>
 </div>
-<div class="di" style="top:264px;left:16px;" ondblclick="openWin('songs-win')">
-  <div class="di-box" style="font-size:36px;color:#000080;">♪</div>
-  <span class="di-label">Songs I Like</span>
-</div>
-
 <!-- ══════════════════════════════════════════════════════════════
      WINDOWS
 ══════════════════════════════════════════════════════════════════ -->
@@ -391,20 +473,6 @@ body.is-mobile .addrbar{font-size:18px;}
   </div>
 </div>
 
-<!-- WINAMP -->
-<div class="win" id="songs-win" style="top:420px;left:730px;width:340px;min-height:116px;">
-  <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
-    <span class="titlebar-icon">♪</span>
-    <div class="titlebar-title">Winamp</div>
-    <div class="win-btns">
-      <div class="win-btn" onclick="minimizeWin('songs-win')">_</div>
-      <div class="win-btn">□</div>
-      <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
-    </div>
-  </div>
-  <div id="winamp-container" style="width:100%;min-height:116px;background:#000;"></div>
-</div>
-
 <!-- MIXES FOLDER -->
 <div class="win" id="mixes-win" style="top:420px;left:500px;width:340px;">
   <div class="titlebar" onmousedown="startDrag(event,'mixes-win')" ontouchstart="startDrag(event,'mixes-win')">
@@ -509,7 +577,6 @@ body.is-mobile .addrbar{font-size:18px;}
   <button id="start-btn">! Start</button>
   <div id="tb-site"      class="tb-item" onclick="toggleWin('site-win')">! lampie.net</div>
   <div id="tb-blackjack" class="tb-item" onclick="toggleWin('blackjack-win')">♠ Blackjack</div>
-  <div id="tb-songs"     class="tb-item" onclick="toggleWin('songs-win')">♪ Songs</div>
   <div id="tb-mixes"     class="tb-item" onclick="toggleWin('mixes-win')">▣ Mixes</div>
   <div id="tb-mix1"      class="tb-item" onclick="toggleWin('mix1-win')">♪ mix</div>
   <div id="tb-readme"    class="tb-item" onclick="toggleWin('readme-win')">txt readme</div>
@@ -538,7 +605,7 @@ tick();setInterval(tick,10000);
 
 // ── WINDOW MANAGEMENT ──────────────────────────────────────────
 const TB_MAP={
-  'site-win':'tb-site','blackjack-win':'tb-blackjack','songs-win':'tb-songs',
+  'site-win':'tb-site','blackjack-win':'tb-blackjack',
   'mixes-win':'tb-mixes','mix1-win':'tb-mix1','readme-win':'tb-readme',
   'youtube-win':'tb-youtube','spotify-win':'tb-spotify'
 };
@@ -699,62 +766,6 @@ loadMsgs();setInterval(loadMsgs,8000);
   buildDeck();
 })();
 
-// ── WEBAMP ─────────────────────────────────────────────────────
-(function(){
-  const container=document.getElementById('winamp-container');
-
-  function showPlayerError(message){
-    container.innerHTML=
-      '<div style="padding:12px;font-family:\'VT323\',monospace;font-size:16px;color:#fff;background:#000;">'
-      + message +
-      '</div>';
-  }
-
-  function loadScript(src){
-    return new Promise((resolve,reject)=>{
-      const script=document.createElement('script');
-      script.src=src;
-      script.onload=resolve;
-      script.onerror=()=>reject(new Error('Failed to load Webamp script.'));
-      document.head.appendChild(script);
-    });
-  }
-
-  (async function bootWebamp(){
-    try{
-      if(!window.Webamp){
-        await loadScript('https://unpkg.com/webamp@2/dist/webamp.bundle.min.js');
-      }
-
-      const webamp=new window.Webamp({
-        initialTracks:[
-          {
-            metaData:{artist:'djbas',title:'17minutes'},
-            url:'17minutes.mp3'
-          }
-        ],
-        initialSkin:{url:'skin1.wsz'},
-        windowLayout:{
-          main:{position:{x:0,y:0}},
-          equalizer:{position:{x:0,y:116}},
-          playlist:{position:{x:0,y:232},shadeMode:false}
-        }
-      });
-
-      await webamp.renderWhenReady(container);
-
-      const songsWin=document.getElementById('songs-win');
-      songsWin.style.background='transparent';
-      songsWin.style.border='none';
-      songsWin.querySelector('.titlebar').style.display='none';
-    }catch(error){
-      showPlayerError(
-        'Winamp could not load right now. Make sure this HTML file stays next to 17minutes.mp3 and skin1.wsz.'
-      );
-      console.error(error);
-    }
-  })();
-})();
 </script>
 </body>
 </html>
