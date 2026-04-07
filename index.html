@@ -392,7 +392,7 @@ body.is-mobile .addrbar{font-size:18px;}
 </div>
 
 <!-- WINAMP -->
-<div class="win" id="songs-win" style="top:420px;left:730px;width:340px;">
+<div class="win" id="songs-win" style="top:420px;left:730px;width:340px;min-height:116px;">
   <div class="titlebar" onmousedown="startDrag(event,'songs-win')" ontouchstart="startDrag(event,'songs-win')">
     <span class="titlebar-icon">♪</span>
     <div class="titlebar-title">Winamp</div>
@@ -402,7 +402,7 @@ body.is-mobile .addrbar{font-size:18px;}
       <div class="win-btn" onclick="closeWin('songs-win','tb-songs')">✕</div>
     </div>
   </div>
-  <div id="winamp-container" style="width:100%;background:#000;"></div>
+  <div id="winamp-container" style="width:100%;min-height:116px;background:#000;"></div>
 </div>
 
 <!-- MIXES FOLDER -->
@@ -701,34 +701,59 @@ loadMsgs();setInterval(loadMsgs,8000);
 
 // ── WEBAMP ─────────────────────────────────────────────────────
 (function(){
-  const script=document.createElement('script');
-  script.src='https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js';
-  script.onload=function(){
-    const webamp=new Webamp({
-      initialTracks:[
-        {
-          metaData:{artist:'djbas',title:'17minutes'},
-          url:'17minutes.mp3'
-        }
-      ],
-      // swap skin1.wsz for your actual skin filename
-      initialSkin:{url:'skin1.wsz'},
-      // double size by default
-      __butterchurnOptions:{},
+  const container=document.getElementById('winamp-container');
+
+  function showPlayerError(message){
+    container.innerHTML=
+      '<div style="padding:12px;font-family:\'VT323\',monospace;font-size:16px;color:#fff;background:#000;">'
+      + message +
+      '</div>';
+  }
+
+  function loadScript(src){
+    return new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.src=src;
+      script.onload=resolve;
+      script.onerror=()=>reject(new Error('Failed to load Webamp script.'));
+      document.head.appendChild(script);
     });
-    // render into our container div
-    const container=document.getElementById('winamp-container');
-    webamp.renderWhenReady(container);
-    // set double size after render
-    webamp.onTrackDidChange(()=>{});
-    // Webamp renders itself as a floating window so
-    // hide our win95 wrapper titlebar chrome — Webamp has its own
-    document.getElementById('songs-win').style.background='transparent';
-    document.getElementById('songs-win').style.border='none';
-    document.getElementById('songs-win').querySelector('.titlebar').style.display='none';
-    document.getElementById('songs-win').querySelector('.win-btns').style.display='none';
-  };
-  document.head.appendChild(script);
+  }
+
+  (async function bootWebamp(){
+    try{
+      if(!window.Webamp){
+        await loadScript('https://unpkg.com/webamp@2/dist/webamp.bundle.min.js');
+      }
+
+      const webamp=new window.Webamp({
+        initialTracks:[
+          {
+            metaData:{artist:'djbas',title:'17minutes'},
+            url:'17minutes.mp3'
+          }
+        ],
+        initialSkin:{url:'skin1.wsz'},
+        windowLayout:{
+          main:{position:{x:0,y:0}},
+          equalizer:{position:{x:0,y:116}},
+          playlist:{position:{x:0,y:232},shadeMode:false}
+        }
+      });
+
+      await webamp.renderWhenReady(container);
+
+      const songsWin=document.getElementById('songs-win');
+      songsWin.style.background='transparent';
+      songsWin.style.border='none';
+      songsWin.querySelector('.titlebar').style.display='none';
+    }catch(error){
+      showPlayerError(
+        'Winamp could not load right now. Make sure this HTML file stays next to 17minutes.mp3 and skin1.wsz.'
+      );
+      console.error(error);
+    }
+  })();
 })();
 </script>
 </body>
