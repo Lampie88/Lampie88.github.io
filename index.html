@@ -18,7 +18,7 @@
 
 body{width:100vw;height:100vh;overflow:hidden;font-family:'VT323',monospace;
   user-select:none;background:#008080;position:relative;
-  filter:contrast(1.04) saturate(0.94) brightness(0.97);}
+  filter:none;}
 body.booting{background:#000;}
 body.booting > *:not(#boot-sequence){visibility:hidden;}
 body.boot-complete > *:not(#boot-sequence){visibility:visible;}
@@ -69,86 +69,6 @@ body.is-mobile.intro-ready #show-bubble{
 }
 body.is-mobile.intro-play #show-bubble{
   animation:mobile-reminder-flash-in 1.12s linear .98s forwards;
-}
-
-body::before,
-body::after{
-  content:'';
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-}
-
-body::before{
-  z-index:10000;
-  opacity:.72;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.05) 0 1px,
-      rgba(0,0,0,0.22) 1px 2px,
-      rgba(0,0,0,0.06) 2px 4px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.1) 0,
-      rgba(255,255,255,0.03) 48%,
-      rgba(0,0,0,0.24) 50%,
-      rgba(0,0,0,0.08) 100%
-    );
-  background-size:100% clamp(3px, 0.34vw, 5px), 100% 100%;
-  background-position:0 0, 0 0;
-  mix-blend-mode:multiply;
-  animation:scan-drift 6s linear infinite;
-}
-
-body::after{
-  z-index:10001;
-  opacity:.46;
-  background:
-    radial-gradient(ellipse at center, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 38%, rgba(0,0,0,0.18) 68%, rgba(0,0,0,0.5) 100%),
-    radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.42) 100%),
-    repeating-linear-gradient(90deg, rgba(255,0,0,0.05) 0 1px, rgba(0,255,0,0.025) 1px 2px, rgba(0,80,255,0.05) 2px 3px),
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0) 0%,
-      rgba(255,255,255,0.08) 48%,
-      rgba(255,255,255,0.2) 50%,
-      rgba(255,255,255,0.06) 52%,
-      rgba(255,255,255,0) 100%
-    );
-  background-size:100% 100%, 100% 100%, 3px 100%, 100% 18%;
-  background-repeat:no-repeat, no-repeat, repeat, no-repeat;
-  box-shadow:
-    inset 0 0 clamp(30px, 7vw, 100px) rgba(0,0,0,0.34),
-    inset 0 0 clamp(90px, 14vw, 180px) rgba(0,0,0,0.2),
-    inset 0 0 clamp(18px, 3vw, 40px) rgba(255,255,255,0.06);
-  transform:scale(1.008,1.018);
-  animation:crt-flicker 0.1s steps(2, end) infinite, screen-distort 6s ease-in-out infinite;
-}
-
-@keyframes crt-flicker{
-  0%{opacity:.24;}
-  50%{opacity:.3;}
-  100%{opacity:.27;}
-}
-
-@keyframes scan-drift{
-  0%{background-position:0 0, 0 0;}
-  100%{background-position:0 14px, 0 0;}
-}
-
-@keyframes screen-distort{
-  0%,100%{transform:scale(1,1) skewX(0deg);}
-  8%{transform:scale(1.001,0.998) skewX(0.15deg);}
-  9%{transform:scale(0.999,1.002) skewX(-0.2deg);}
-  10%{transform:scale(1,1) skewX(0deg);}
-  42%{transform:scale(1,1) translateY(0);}
-  44%{transform:scale(1.002,0.996) translateY(-0.35vh);}
-  46%{transform:scale(0.999,1.003) translateY(0.2vh);}
-  48%{transform:scale(1,1) translateY(0);}
-  78%{transform:scale(1.001,0.999) skewX(0.12deg);}
-  80%{transform:scale(1,1) skewX(0deg);}
 }
 
 @keyframes desktop-icon-drop{
@@ -207,51 +127,6 @@ body::after{
 #boot-sequence.is-zooming{
   background:#008080;
   transition:background .42s linear;
-}
-#boot-sequence::before,
-#boot-sequence::after{
-  content:'';
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-}
-#boot-sequence::before{
-  z-index:3;
-  opacity:.78;
-  background:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.05) 0 1px,
-      rgba(0,0,0,0.24) 1px 2px,
-      rgba(0,0,0,0.08) 2px 4px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.1) 0,
-      rgba(255,255,255,0.03) 48%,
-      rgba(0,0,0,0.26) 50%,
-      rgba(0,0,0,0.1) 100%
-    );
-  background-size:100% clamp(3px, 0.34vw, 5px), 100% 100%;
-  mix-blend-mode:multiply;
-  animation:scan-drift 6s linear infinite;
-}
-#boot-sequence::after{
-  z-index:4;
-  opacity:.5;
-  background:
-    radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 38%, rgba(0,0,0,0.22) 68%, rgba(0,0,0,0.56) 100%),
-    radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.46) 100%),
-    repeating-linear-gradient(90deg, rgba(255,0,0,0.05) 0 1px, rgba(0,255,0,0.025) 1px 2px, rgba(0,80,255,0.05) 2px 3px),
-    linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 49%, rgba(255,255,255,0.18) 50%, rgba(255,255,255,0.04) 52%, rgba(255,255,255,0) 100%);
-  background-size:100% 100%, 100% 100%, 3px 100%, 100% 18%;
-  background-repeat:no-repeat, no-repeat, repeat, no-repeat;
-  box-shadow:
-    inset 0 0 clamp(30px, 7vw, 100px) rgba(0,0,0,0.36),
-    inset 0 0 clamp(90px, 14vw, 180px) rgba(0,0,0,0.22),
-    inset 0 0 clamp(18px, 3vw, 40px) rgba(255,255,255,0.05);
-  transform:scale(1.008,1.018);
-  animation:crt-flicker 0.1s steps(2, end) infinite, screen-distort 6s ease-in-out infinite;
 }
 #boot-sequence.hidden{
   opacity:0;
@@ -374,6 +249,7 @@ body::after{
 
 /* ── DESKTOP ICONS ───────────────────────────────────────────── */
 .di{position:absolute;width:100px;text-align:center;cursor:pointer;padding:4px;}
+.di{z-index:60;}
 .di:hover .di-label{background:#000080;color:#fff;}
 .di-box{
   width:72px;height:72px;
@@ -398,6 +274,15 @@ body::after{
 }
 .di-label{font-size:12px;color:#fff;text-shadow:1px 1px #000;
   font-family:'VT323',monospace;padding:1px 4px;display:inline-block;}
+
+#webamp-host{
+  position:fixed;
+  left:18px;
+  top:286px;
+  width:920px;
+  height:520px;
+  z-index:20;
+}
 
 /* ── WIN95 WINDOW ────────────────────────────────────────────── */
 .win{position:absolute;background:#c0c0c0;
@@ -434,6 +319,48 @@ body::after{
   font-size:11px;padding:1px 5px;cursor:pointer;color:#000;}
 
 .win-body{overflow-y:auto;flex:1;background:#c0c0c0;}
+body:not(.is-mobile) #site-win{
+  width:840px !important;
+  height:540px;
+}
+body:not(.is-mobile) #site-win .win-body{
+  min-height:0;
+  overflow-y:auto;
+}
+body:not(.is-mobile) #blackjack-win{
+  width:840px !important;
+  height:540px;
+  top:24px;
+  left:290px;
+}
+body:not(.is-mobile) #blackjack-win #bj-wrap{
+  flex:1;
+  overflow:auto;
+}
+body:not(.is-mobile) #bj-wrap{
+  font-size:22px;
+  padding:16px;
+}
+body:not(.is-mobile) .bj-btn{
+  font-size:20px;
+  padding:8px 16px;
+}
+body:not(.is-mobile) #bj-msg{
+  font-size:24px !important;
+  min-height:30px !important;
+}
+body:not(.is-mobile) #bj-bet-ctrl,
+body:not(.is-mobile) #bj-act-ctrl,
+body:not(.is-mobile) #bj-new-ctrl{
+  gap:10px !important;
+  margin-bottom:10px !important;
+  flex-wrap:wrap;
+}
+body:not(.is-mobile) #bj-dealer-cards,
+body:not(.is-mobile) #bj-player-cards{
+  min-height:92px !important;
+  gap:8px !important;
+}
 
 /* ── SITE CONTENT ────────────────────────────────────────────── */
 #site{font-family:'VT323',monospace;font-size:18px;color:#000;padding:10px 14px;}
@@ -549,6 +476,12 @@ body.is-mobile .di{width:220px;padding:8px 0;}
 body.is-mobile .di-label{font-size:22px;}
 body.is-mobile #icon-site{top:18px !important;left:10px !important;}
 body.is-mobile #icon-blackjack{top:240px !important;left:10px !important;}
+body.is-mobile #webamp-host{
+  left:10px;
+  top:470px;
+  width:calc(100vw - 20px);
+  height:420px;
+}
 
 /* Taskbar bigger on mobile */
 body.is-mobile #taskbar{height:82px;}
@@ -590,17 +523,45 @@ body.is-mobile .win-body{min-height:calc(100vh - 220px);}
 body.is-mobile .titlebar{padding:6px 8px;}
 body.is-mobile .win-btns{gap:4px;}
 body.is-mobile #blackjack-win{
-  width:calc(100vw - 48px) !important;
-  max-width:440px !important;
-  left:24px !important;
+  width:calc(100vw - 24px) !important;
+  max-width:calc(100vw - 24px) !important;
+  height:calc(100vh - 430px - 82px - 54px) !important;
+  max-height:calc(100vh - 430px - 82px - 54px) !important;
+  left:12px !important;
+  top:430px !important;
+  background:#005000;
 }
-body.is-mobile #bj-wrap{font-size:20px;padding:12px;}
-body.is-mobile .bj-btn{font-size:18px;padding:6px 12px;}
+body.is-mobile #blackjack-win #bj-wrap{
+  font-size:30px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  gap:10px;
+  overflow:auto;
+  min-height:100%;
+  background:#005000;
+}
+body.is-mobile .bj-btn{font-size:30px;padding:12px 18px;}
 body.is-mobile #bj-bet-ctrl,
 body.is-mobile #bj-act-ctrl,
-body.is-mobile #bj-new-ctrl{flex-wrap:wrap;gap:8px;}
+body.is-mobile #bj-new-ctrl{flex-wrap:wrap;gap:12px;}
 body.is-mobile #bj-dealer-cards,
-body.is-mobile #bj-player-cards{min-height:84px !important;gap:6px !important;}
+body.is-mobile #bj-player-cards{min-height:170px !important;gap:12px !important;}
+body.is-mobile #blackjack-win #bj-wrap > div:first-child{
+  padding:12px 14px !important;
+  margin-bottom:10px !important;
+  font-size:1.15em !important;
+}
+body.is-mobile #blackjack-win #bj-wrap > div:nth-child(2),
+body.is-mobile #blackjack-win #bj-wrap > div:nth-child(3){
+  margin-bottom:8px !important;
+}
+body.is-mobile #bj-msg{
+  font-size:30px !important;
+  min-height:38px !important;
+  margin-bottom:8px !important;
+}
 body.is-mobile #site{padding:14px 16px 20px;font-size:24px;}
 body.is-mobile #site h1{font-size:56px;line-height:.95;margin-bottom:8px;}
 body.is-mobile #site h2{font-size:28px;margin-bottom:8px;}
@@ -624,6 +585,12 @@ body.is-mobile .chat-board{padding:8px;}
   #show-bubble{font-size:13px;max-width:200px;bottom:66px;}
   #icon-site{top:14px !important;left:8px !important;}
   #icon-blackjack{top:132px !important;left:8px !important;}
+  #webamp-host{
+    left:8px;
+    top:242px;
+    width:calc(100vw - 16px);
+    height:360px;
+  }
   .win{
     width:calc(100vw - 16px) !important;
     max-width:calc(100vw - 16px) !important;
@@ -633,15 +600,18 @@ body.is-mobile .chat-board{padding:8px;}
   }
   .win-body{min-height:calc(100vh - 190px);}
   #blackjack-win{
-    width:calc(100vw - 28px) !important;
-    max-width:calc(100vw - 28px) !important;
-    left:14px !important;
+    width:calc(100vw - 16px) !important;
+    max-width:calc(100vw - 16px) !important;
+    height:calc(100vh - 236px - 74px - 44px) !important;
+    max-height:calc(100vh - 236px - 74px - 44px) !important;
+    left:8px !important;
+    top:236px !important;
   }
-  #bj-wrap{font-size:16px;padding:10px;}
-  .bj-btn{font-size:15px;padding:4px 10px;}
+  #bj-wrap{font-size:16px;padding:9px;}
+  .bj-btn{font-size:16px;padding:6px 11px;}
   #bj-bet-ctrl,
   #bj-act-ctrl,
-  #bj-new-ctrl{flex-wrap:wrap;gap:6px;}
+  #bj-new-ctrl{flex-wrap:wrap;gap:8px;}
   #site{padding:12px 12px 18px;font-size:17px;}
   #site h1{font-size:38px;line-height:1;}
   #site h2{font-size:20px;}
@@ -649,8 +619,6 @@ body.is-mobile .chat-board{padding:8px;}
   .layout{flex-direction:column;gap:12px;}
   .left,.right{width:100%;}
   .social-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;gap:8px 10px;font-size:17px;}
-  body::before{background-size:100% clamp(2px, 0.55vw, 4px), 100% 100%;opacity:.64;}
-  body::after{opacity:.4;}
 }
 </style>
 </head>
@@ -667,6 +635,8 @@ body.is-mobile .chat-board{padding:8px;}
     </div>
   </div>
 </div>
+
+<div id="webamp-host"></div>
 
 <!-- SHOW REMINDER -->
 <div id="show-bubble">
@@ -763,7 +733,7 @@ body.is-mobile .chat-board{padding:8px;}
 </div>
 
 <!-- BLACKJACK -->
-<div class="win" id="blackjack-win" style="top:420px;left:290px;width:420px;">
+<div class="win" id="blackjack-win" style="top:24px;left:290px;width:420px;">
   <div class="titlebar" onmousedown="startDrag(event,'blackjack-win')" ontouchstart="startDrag(event,'blackjack-win')">
     <span class="titlebar-icon">♠</span>
     <div class="titlebar-title">Blackjack.exe</div>
@@ -775,15 +745,15 @@ body.is-mobile .chat-board{padding:8px;}
   </div>
   <div class="menubar"><span>Game</span><span>Help</span></div>
   <div id="bj-wrap">
-    <div style="display:flex;justify-content:space-between;background:rgba(0,0,0,0.3);padding:4px 8px;margin-bottom:8px;">
+    <div style="display:flex;justify-content:space-between;background:rgba(0,0,0,0.3);padding:8px 12px;margin-bottom:12px;font-size:1.05em;">
       <span>BALANCE: <b id="bj-balance">$100</b></span><span>BET: <b id="bj-bet">$5</b></span>
     </div>
-    <div style="margin-bottom:6px;">
-      <div style="font-size:12px;color:#9fc;">DEALER <span id="bj-dealer-val"></span></div>
+    <div style="margin-bottom:10px;">
+      <div style="font-size:0.9em;color:#9fc;">DEALER <span id="bj-dealer-val"></span></div>
       <div id="bj-dealer-cards" style="display:flex;gap:4px;flex-wrap:wrap;min-height:66px;margin-top:4px;"></div>
     </div>
-    <div style="margin-bottom:8px;">
-      <div style="font-size:12px;color:#9fc;">YOU <span id="bj-player-val"></span></div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:0.9em;color:#9fc;">YOU <span id="bj-player-val"></span></div>
       <div id="bj-player-cards" style="display:flex;gap:4px;flex-wrap:wrap;min-height:66px;margin-top:4px;"></div>
     </div>
     <div id="bj-msg" style="text-align:center;font-size:17px;min-height:20px;color:#ff0;margin-bottom:6px;"></div>
@@ -917,6 +887,73 @@ body.is-mobile .chat-board{padding:8px;}
 </div>
 
 <script>
+// ── WEBAMP ──────────────────────────────────────────────────────
+(function(){
+  const host=document.getElementById('webamp-host');
+  if(!host) return;
+
+  function loadScript(src){
+    return new Promise((resolve,reject)=>{
+      const s=document.createElement('script');
+      s.src=src;
+      s.onload=resolve;
+      s.onerror=reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function renamePlaylistWindow(root){
+    if(!root) return;
+    const walker=document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while((node=walker.nextNode())){
+      if(node.nodeValue && node.nodeValue.trim()==='Playlist Editor'){
+        node.nodeValue='songs I like';
+      }
+    }
+  }
+
+  Promise.all([
+    loadScript('https://unpkg.com/butterchurn/lib/butterchurn.min.js'),
+    loadScript('https://unpkg.com/butterchurn-presets/dist/base.min.js'),
+    loadScript('https://unpkg.com/webamp@1.5.0/built/webamp.bundle.min.js')
+  ]).then(()=>{
+    const isMobile=document.body.classList.contains('is-mobile');
+    const presetsSource=window.butterchurnPresets || window.base || {};
+    const presets={};
+    Object.keys(presetsSource).forEach(name=>{
+      presets[name]={name,butterchurnPresetObject:presetsSource[name]};
+    });
+
+    const webamp=new Webamp({
+      zIndex:20,
+      initialTracks:[
+        {
+          metaData:{artist:'djbas',title:'17minutes'},
+          url:'./17minutes.mp3'
+        }
+      ],
+      __butterchurnOptions:{
+        importButterchurn: () => Promise.resolve(window.butterchurn),
+        getPresets: () => Promise.resolve(presets)
+      },
+      windowLayout:{
+        main:{position:{x:0,y:0},closed:false},
+        equalizer:{position:{x:0,y:116},closed:false},
+        playlist:{position:{x:0,y:232},size:[0,isMobile?8:6],closed:false},
+        milkdrop:{position:{x:isMobile?0:276,y:isMobile?396:0},size:[isMobile?0:7,isMobile?6:12],closed:false}
+      }
+    });
+
+    webamp.renderWhenReady(host).then(()=>{
+      renamePlaylistWindow(host);
+      const observer=new MutationObserver(()=>renamePlaylistWindow(host));
+      observer.observe(host,{childList:true,subtree:true,characterData:true});
+      setTimeout(()=>observer.disconnect(),4000);
+    }).catch(()=>{});
+  }).catch(()=>{});
+})();
+
 // ── BOOT SEQUENCE ───────────────────────────────────────────────
 (function(){
   const boot=document.getElementById('boot-sequence');
@@ -965,9 +1002,19 @@ const TB_MAP={
   'mixes-win':'tb-mixes','mix1-win':'tb-mix1','readme-win':'tb-readme',
   'youtube-win':'tb-youtube','spotify-win':'tb-spotify'
 };
+let topWinZ=200;
+function bringToFront(el){
+  if(!el) return;
+  if(document.body.classList.contains('is-mobile')){
+    el.style.zIndex=200;
+    return;
+  }
+  topWinZ+=1;
+  el.style.zIndex=topWinZ;
+}
 function openWin(id){
   const w=document.getElementById(id);
-  w.classList.add('open');w.style.display='flex';w.style.zIndex=200;
+  w.classList.add('open');w.style.display='flex';bringToFront(w);
   const tb=TB_MAP[id];if(tb)document.getElementById(tb).style.display='block';
 }
 function closeWin(id,tb){
@@ -991,7 +1038,7 @@ function startDrag(e,id){
   const cx=e.touches?e.touches[0].clientX:e.clientX;
   const cy=e.touches?e.touches[0].clientY:e.clientY;
   drag={id,ox:cx-r.left,oy:cy-r.top};
-  w.style.zIndex=200;
+  bringToFront(w);
   e.preventDefault();
 }
 function onMove(e){
@@ -1061,21 +1108,22 @@ loadMsgs();setInterval(loadMsgs,8000);
 
 // ── BLACKJACK ──────────────────────────────────────────────────
 (function(){
-  const S=['♠','♥','♦','♣'],R=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+  const S=['\u2660','\u2665','\u2666','\u2663'],R=['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
   let deck=[],pH=[],dH=[],bal=100,bet=5,over=true;
   function buildDeck(){
     deck=[];for(const s of S)for(const r of R)deck.push({s,r});
     for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]];}
   }
-  function val(r){if(['J','Q','K'].includes(r))return 10;if(r==='A')return 11;return+r;}
+  function val(r){if(['J','Q','K'].includes(r))return 10;if(r==='A')return 11;return +r;}
   function hval(h){let v=0,a=0;for(const c of h){v+=val(c.r);if(c.r==='A')a++;}while(v>21&&a-->0)v-=10;return v;}
   function deal(){return deck.pop();}
   function mkCard(c,hidden){
-    const red=['♥','♦'].includes(c.s);const d=document.createElement('div');
-    d.style.cssText=`width:38px;height:56px;background:${hidden?'#000080':'#fff'};
+    const red=['\u2665','\u2666'].includes(c.s);const d=document.createElement('div');
+    const isMobile=document.body.classList.contains('is-mobile');
+    d.style.cssText=`width:${isMobile?86:38}px;height:${isMobile?126:56}px;background:${hidden?'#000080':'#fff'};
       border-top:2px solid #fff;border-left:2px solid #fff;border-bottom:2px solid #555;border-right:2px solid #555;
       display:flex;flex-direction:column;justify-content:space-between;padding:2px 3px;
-      font-family:'VT323',monospace;font-size:13px;color:${hidden?'#000080':(red?'#aa0000':'#000')};`;
+      font-family:'VT323',monospace;font-size:${isMobile?30:13}px;color:${hidden?'#000080':(red?'#aa0000':'#000')};`;
     if(!hidden)d.innerHTML=`<span>${c.r}${c.s}</span><span style="align-self:flex-end;transform:rotate(180deg)">${c.r}${c.s}</span>`;
     return d;
   }
@@ -1114,9 +1162,10 @@ loadMsgs();setInterval(loadMsgs,8000);
     else if(pv>dv){bal+=bet*2;m=`You win! +$${bet}`;}
     else if(pv===dv){bal+=bet;m='Push. Bet returned.';}
     else{m=`Dealer wins. -$${bet}`;}
-    updBal();msg(m);
+    updBal();
+    msg(m);
     if(bet>bal)bet=Math.max(5,Math.floor(bal/5)*5);updBet();
-    if(bal<5){msg(m+' — Out of money!');setTimeout(()=>{bal=100;bet=5;updBal();updBet();showBet();msg('$100 reloaded!');},2000);return;}
+    if(bal<5){msg(m+' - Out of money!');setTimeout(()=>{bal=100;bet=5;updBal();updBet();showBet();msg('$100 reloaded!');},2000);return;}
     showNew();
   }
   window.bjNew=function(){
@@ -1130,3 +1179,5 @@ loadMsgs();setInterval(loadMsgs,8000);
 </script>
 </body>
 </html>
+
+
